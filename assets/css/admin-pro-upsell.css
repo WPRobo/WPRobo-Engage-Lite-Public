@@ -1,0 +1,96 @@
+/* Pro Upsell — WPRobo Engage Lite
+ * Clean informational cards for Pro features.
+ * No feature code is gated — purely promotional UI.
+ */
+
+/* ── PRO Badge ─────────────────────────────────── */
+.wpr-pro-badge {
+	display: inline-block;
+	background: linear-gradient(135deg, #0f172a, #1e40af);
+	color: #fff;
+	font-size: 10px;
+	font-weight: 700;
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+	padding: 2px 8px;
+	border-radius: 3px;
+	vertical-align: middle;
+	margin-left: 6px;
+	line-height: 1.4;
+}
+
+/* ── Pro Feature Overlay Card ──────────────────── */
+.wpr-pro-overlay {
+	position: relative;
+	min-height: 240px;
+	overflow: hidden;
+	border-radius: 10px;
+	background: #f8fafc;
+}
+
+.wpr-pro-overlay-content {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	padding: 40px 32px;
+	min-height: 240px;
+}
+
+.wpr-pro-overlay-icon {
+	font-size: 32px;
+	width: 32px;
+	height: 32px;
+	color: #0f172a;
+	opacity: 0.5;
+	margin-bottom: 12px;
+}
+
+.wpr-pro-overlay-title {
+	font-size: 17px;
+	font-weight: 700;
+	color: #0f172a;
+	margin: 0 0 8px;
+}
+
+.wpr-pro-overlay-desc {
+	font-size: 13px;
+	color: #64748b;
+	margin: 0 0 20px;
+	max-width: 360px;
+}
+
+.wpr-btn-upgrade {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	background: linear-gradient(135deg, #0f172a, #1e40af);
+	color: #fff;
+	padding: 10px 24px;
+	border-radius: 6px;
+	font-size: 13px;
+	font-weight: 700;
+	text-decoration: none;
+	transition: all 0.2s;
+	border: none;
+	cursor: pointer;
+}
+
+.wpr-btn-upgrade:hover,
+.wpr-btn-upgrade:focus,
+.wpr-btn-upgrade:active,
+.wpr-btn-upgrade:visited {
+	background: linear-gradient(135deg, #1e40af, #2563eb);
+	color: #fff;
+	transform: translateY(-1px);
+	box-shadow: 0 4px 12px rgba(15, 23, 42, 0.3);
+}
+
+/* Badge inside upgrade button needs inverted colors */
+.wpr-btn-upgrade .wpr-pro-badge {
+	background: #fff;
+	color: #0f172a;
+}
+
+

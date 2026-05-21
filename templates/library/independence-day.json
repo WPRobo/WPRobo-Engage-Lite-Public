@@ -1,0 +1,27 @@
+{
+	"name": "Independence Day Celebration",
+	"description": "Patriotic 4th of July template with red, white, and blue theme",
+	"category": "holiday",
+	"tags": ["fourth-of-july", "independence-day", "july", "patriotic"],
+	"thumbnail": "independence-day.png",
+	"settings": {
+		"campaign_type": "popup",
+		"campaign_status": "draft",
+		"design_headline": "🇺🇸 Independence Day Sale! 🎆",
+		"design_content": "Celebrate freedom with 25% OFF! Explosive savings for the 4th of July.",
+		"design_button": "Celebrate Freedom",
+		"style_bg_color": "#F0F8FF",
+		"style_text_color": "#00008B",
+		"style_headline_color": "#DC143C",
+		"style_button_bg_color": "#00008B",
+		"style_button_text_color": "#ffffff",
+		"style_width": "500",
+		"style_border_radius": "10",
+		"style_border_width": "3",
+		"style_border_color": "#DC143C",
+		"trigger_type": "time",
+		"trigger_value": "4",
+		"success_action": "message",
+		"success_message": "🎇 Fireworks! Your patriotic discount is ready!"
+	}
+}

@@ -1,0 +1,293 @@
+/* WPRobo Engage - Admin Template Library page styles */
+
+/* ─── Template stage variables ─────────────────────────────────────── */
+.wpr-template-stage {
+	--wpr-ink: #0f172a;
+	--wpr-muted: #475569;
+	--wpr-surface: #ffffff;
+	--wpr-surface-soft: #f8fafc;
+	--wpr-line: #e2e8f0;
+	--wpr-accent: #1d4ed8;
+	--wpr-accent-strong: #0f2f77;
+	background: transparent;
+}
+
+/* ─── Template cards ────────────────────────────────────────────────── */
+.wpr-premium-card {
+	transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.22s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.22s ease;
+	box-shadow: 0 1px 2px rgba(2, 6, 23, 0.04), 0 10px 24px rgba(2, 6, 23, 0.04);
+}
+
+.wpr-premium-card:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08), 0 16px 32px rgba(15, 23, 42, 0.08);
+	border-color: #cbd5e1;
+}
+
+/* ─── CTA button ────────────────────────────────────────────────────── */
+.wpr-btn-premium {
+	background: linear-gradient(140deg, #0f172a 0%, #1d4ed8 100%);
+	transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+
+.wpr-btn-premium,
+.wpr-btn-premium:visited,
+.wpr-btn-premium:hover,
+.wpr-btn-premium:focus,
+.wpr-btn-premium:active {
+	color: #ffffff !important;
+	text-decoration: none;
+}
+
+.wpr-btn-premium:hover {
+	transform: translateY(-1px);
+	box-shadow: 0 10px 20px rgba(15, 47, 119, 0.24);
+	filter: saturate(1.07);
+}
+
+/* ─── Filter toolbar ────────────────────────────────────────────────── */
+.wpr-filter-input:focus {
+	box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.16);
+}
+
+.wpr-template-toolbar {
+	background: rgba(255, 255, 255, 0.9);
+	backdrop-filter: blur(8px);
+}
+
+.wpr-select-shell {
+	position: relative;
+}
+
+.wpr-select-shell select {
+	appearance: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	background-image: none;
+	background-color: #f8fafc;
+	padding-right: 2.2rem;
+}
+
+.wpr-select-shell svg {
+	position: absolute;
+	right: 0.75rem;
+	top: 50%;
+	transform: translateY(-50%);
+	pointer-events: none;
+}
+
+.wpr-search-shell {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	border: 1px solid #cbd5e1;
+	background: #f8fafc;
+	border-radius: 0.75rem;
+	padding: 0 0.75rem;
+}
+
+.wpr-search-shell:focus-within {
+	background: #ffffff;
+	box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.16);
+	border-color: #94a3b8;
+}
+
+.wpr-search-shell input {
+	width: 100%;
+	border: 0;
+	background: transparent;
+	padding: 0.625rem 0.5rem;
+	font-size: 0.875rem;
+	line-height: 1.25rem;
+	color: #0f172a;
+	outline: none;
+}
+
+.wpr-search-shell input:focus {
+	box-shadow: none;
+}
+
+.wpr-search-shell svg {
+	flex-shrink: 0;
+	margin-right: 0.25rem;
+}
+
+/* ─── KPI chip ──────────────────────────────────────────────────────── */
+.wpr-kpi-chip {
+	border: 1px solid #dbeafe;
+	background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+}
+
+/* ─── Preview card ──────────────────────────────────────────────────── */
+.wpr-template-preview {
+	border: 1px solid rgba(255, 255, 255, 0.72);
+	box-shadow: 0 10px 20px rgba(15, 23, 42, 0.08);
+}
+
+.wpr-template-preview-button {
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+.wpr-focus-ring:focus-visible {
+	outline: 2px solid #1d4ed8;
+	outline-offset: 2px;
+}
+
+/* ─── Hover overlay on template thumbnails ──────────────────────────── */
+.wpr-template-thumb { cursor: default; }
+
+.wpr-template-preview-btn {
+	position: absolute;
+	inset: 0;
+	margin: auto;
+	width: 120px;
+	height: 40px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 6px;
+	background: rgba(15, 23, 42, 0.9);
+	color: #ffffff;
+	font-size: 13px;
+	font-weight: 600;
+	border: none;
+	border-radius: 8px;
+	cursor: pointer;
+	opacity: 0;
+	transform: translateY(4px);
+	transition: opacity 0.2s ease, transform 0.2s ease;
+	z-index: 2;
+}
+
+.wpr-template-thumb:hover .wpr-template-preview-btn,
+.wpr-template-preview-btn:focus-visible {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+.wpr-template-preview-btn:hover { background: #0f172a; }
+
+/* ─── Template Preview Modal ────────────────────────────────────────── */
+#wpr-template-preview-modal {
+	position: fixed;
+	inset: 0;
+	z-index: 999999;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+#wpr-template-preview-modal.wpr-tpm-hidden { display: none; }
+
+.wpr-tpm-backdrop {
+	position: absolute;
+	inset: 0;
+	background: rgba(15, 23, 42, 0.7);
+	backdrop-filter: blur(2px);
+}
+
+.wpr-tpm-content {
+	position: relative;
+	background: #ffffff;
+	border-radius: 16px;
+	width: min(720px, calc(100vw - 32px));
+	max-height: calc(100vh - 64px);
+	overflow-y: auto;
+	padding: 32px;
+	box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+.wpr-tpm-close {
+	position: absolute;
+	top: 12px;
+	right: 12px;
+	width: 36px;
+	height: 36px;
+	border-radius: 8px;
+	background: transparent;
+	border: 1px solid transparent;
+	color: #64748b;
+	cursor: pointer;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.wpr-tpm-close:hover { background: #f1f5f9; color: #0f172a; }
+
+.wpr-tpm-title { margin: 0; font-size: 22px; font-weight: 700; color: #0f172a; }
+.wpr-tpm-meta  { display: flex; gap: 8px; flex-wrap: wrap; }
+
+.wpr-tpm-chip {
+	background: #f1f5f9;
+	color: #475569;
+	border-radius: 999px;
+	padding: 4px 10px;
+	font-size: 11px;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+}
+
+.wpr-tpm-desc { margin: 0; color: #475569; font-size: 14px; line-height: 1.6; }
+
+.wpr-tpm-frame {
+	background-color: #e5e7eb;
+	background-image:
+		linear-gradient(45deg, #d1d5db 25%, transparent 25%),
+		linear-gradient(-45deg, #d1d5db 25%, transparent 25%),
+		linear-gradient(45deg, transparent 75%, #d1d5db 75%),
+		linear-gradient(-45deg, transparent 75%, #d1d5db 75%);
+	background-size: 16px 16px;
+	background-position: 0 0, 0 8px, 8px -8px, -8px 0px;
+	border-radius: 12px;
+	padding: 32px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 280px;
+}
+
+.wpr-tpm-preview-card {
+	width: 100%;
+	max-width: 420px;
+	padding: 32px 28px;
+	border-radius: 12px;
+	text-align: center;
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.wpr-tpm-preview-headline { font-size: 22px; font-weight: 700; line-height: 1.3; margin-bottom: 14px; }
+.wpr-tpm-preview-email    { font-size: 12px; opacity: 0.75; margin-bottom: 18px; padding: 10px 14px; background: rgba(255, 255, 255, 0.45); border-radius: 6px; }
+.wpr-tpm-preview-button   { font-size: 14px; font-weight: 600; padding: 10px 20px; border-radius: 8px; border: none; cursor: default; }
+.wpr-tpm-footer           { display: flex; justify-content: flex-end; }
+
+/* ─── Responsive ────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+	.wpr-premium-card,
+	.wpr-btn-premium {
+		transition: none;
+	}
+
+	.wpr-premium-card:hover,
+	.wpr-btn-premium:hover {
+		transform: none;
+	}
+}
+
+@media (max-width: 782px) {
+	.wpr-template-filter-row {
+		align-items: stretch;
+	}
+
+	.wpr-template-filter-row .wpr-mobile-full {
+		width: 100%;
+	}
+
+	.wpr-template-filter-row .wpr-mobile-full button {
+		width: 100%;
+	}
+}

@@ -1,0 +1,27 @@
+{
+	"name": "Back to School Special",
+	"description": "Educational back to school template with academic theme and student offers",
+	"category": "seasonal",
+	"tags": ["back-to-school", "september", "students", "education"],
+	"thumbnail": "back-to-school.png",
+	"settings": {
+		"campaign_type": "popup",
+		"campaign_status": "draft",
+		"design_headline": "📚 Back to School Savings! ✏️",
+		"design_content": "Get ready for the new school year! Enjoy 20% OFF supplies and more.",
+		"design_button": "Shop for School",
+		"style_bg_color": "#FFFACD",
+		"style_text_color": "#2F4F4F",
+		"style_headline_color": "#FF6347",
+		"style_button_bg_color": "#4169E1",
+		"style_button_text_color": "#ffffff",
+		"style_width": "500",
+		"style_border_radius": "10",
+		"style_border_width": "2",
+		"style_border_color": "#FFD700",
+		"trigger_type": "time",
+		"trigger_value": "4",
+		"success_action": "message",
+		"success_message": "🎒 A+ savings! Your discount is ready for school!"
+	}
+}

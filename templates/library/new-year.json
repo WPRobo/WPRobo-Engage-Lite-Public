@@ -1,0 +1,27 @@
+{
+	"name": "New Year Celebration",
+	"description": "Festive New Year template to start the year with exciting offers",
+	"category": "holiday",
+	"tags": ["new-year", "january", "celebration", "fresh-start"],
+	"thumbnail": "new-year.png",
+	"settings": {
+		"campaign_type": "popup",
+		"campaign_status": "draft",
+		"design_headline": "🎉 New Year, New Savings! 🍾",
+		"design_content": "Start the year right with 30% OFF! Ring in the new year with amazing deals.",
+		"design_button": "Celebrate & Save",
+		"style_bg_color": "#000033",
+		"style_text_color": "#FFD700",
+		"style_headline_color": "#FFFFFF",
+		"style_button_bg_color": "#FFD700",
+		"style_button_text_color": "#000033",
+		"style_width": "520",
+		"style_border_radius": "10",
+		"style_border_width": "3",
+		"style_border_color": "#FFD700",
+		"trigger_type": "time",
+		"trigger_value": "3",
+		"success_action": "message",
+		"success_message": "🎊 Happy New Year! Your discount is here!"
+	}
+}

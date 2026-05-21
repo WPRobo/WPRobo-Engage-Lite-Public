@@ -1,0 +1,27 @@
+{
+	"name": "Valentine's Day Special",
+	"description": "Romantic Valentine's Day template with love-themed colors and messaging",
+	"category": "holiday",
+	"tags": ["valentines", "love", "romantic", "february"],
+	"thumbnail": "valentines-day.png",
+	"settings": {
+		"campaign_type": "popup",
+		"campaign_status": "draft",
+		"design_headline": "💕 Spread the Love ❤️",
+		"design_content": "Get 20% OFF gifts for your special someone. Show your love this Valentine's Day!",
+		"design_button": "Claim My Discount",
+		"style_bg_color": "#FFF0F5",
+		"style_text_color": "#DC143C",
+		"style_headline_color": "#FF1493",
+		"style_button_bg_color": "#DC143C",
+		"style_button_text_color": "#ffffff",
+		"style_width": "480",
+		"style_border_radius": "20",
+		"style_border_width": "2",
+		"style_border_color": "#FFB6C1",
+		"trigger_type": "time",
+		"trigger_value": "4",
+		"success_action": "message",
+		"success_message": "💝 Lovely! Your Valentine's discount is ready!"
+	}
+}

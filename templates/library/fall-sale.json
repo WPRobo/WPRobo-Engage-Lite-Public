@@ -1,0 +1,27 @@
+{
+	"name": "Fall Autumn Sale",
+	"description": "Cozy autumn sale template with warm fall colors and harvest theme",
+	"category": "seasonal",
+	"tags": ["fall", "autumn", "sale", "seasonal", "september", "october", "november"],
+	"thumbnail": "fall-sale.png",
+	"settings": {
+		"campaign_type": "popup",
+		"campaign_status": "draft",
+		"design_headline": "🍂 Fall into Amazing Deals! 🍁",
+		"design_content": "Autumn savings are here! Cozy up with 20% OFF on everything.",
+		"design_button": "Shop Fall Sale",
+		"style_bg_color": "#FFF8DC",
+		"style_text_color": "#8B4513",
+		"style_headline_color": "#D2691E",
+		"style_button_bg_color": "#CD5C5C",
+		"style_button_text_color": "#ffffff",
+		"style_width": "500",
+		"style_border_radius": "12",
+		"style_border_width": "2",
+		"style_border_color": "#D2691E",
+		"trigger_type": "scroll",
+		"trigger_value": "35",
+		"success_action": "message",
+		"success_message": "🎃 Harvest your savings! Discount is ready!"
+	}
+}

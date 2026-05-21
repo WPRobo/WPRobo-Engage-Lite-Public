@@ -1,0 +1,27 @@
+{
+	"name": "Spring Sale Blossom",
+	"description": "Fresh spring sale template with blooming colors and renewal theme",
+	"category": "seasonal",
+	"tags": ["spring", "sale", "seasonal", "march", "april", "may"],
+	"thumbnail": "spring-sale.png",
+	"settings": {
+		"campaign_type": "popup",
+		"campaign_status": "draft",
+		"design_headline": "🌸 Spring into Savings! 🦋",
+		"design_content": "Fresh deals are blooming! Enjoy 20% OFF to celebrate the new season.",
+		"design_button": "Shop Spring Sale",
+		"style_bg_color": "#F0FFF0",
+		"style_text_color": "#2E8B57",
+		"style_headline_color": "#FF69B4",
+		"style_button_bg_color": "#32CD32",
+		"style_button_text_color": "#ffffff",
+		"style_width": "500",
+		"style_border_radius": "15",
+		"style_border_width": "2",
+		"style_border_color": "#98FB98",
+		"trigger_type": "scroll",
+		"trigger_value": "30",
+		"success_action": "message",
+		"success_message": "🌷 Blooming beautiful! Your spring discount awaits!"
+	}
+}

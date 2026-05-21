@@ -1,0 +1,27 @@
+{
+	"name": "End of Year Clearance",
+	"description": "Urgent end of year sale template to clear inventory with big savings",
+	"category": "special-event",
+	"tags": ["end-of-year", "clearance", "sale", "december"],
+	"thumbnail": "end-of-year.png",
+	"settings": {
+		"campaign_type": "popup",
+		"campaign_status": "draft",
+		"design_headline": "🎯 Year-End Clearance! 🔥",
+		"design_content": "Last chance! Up to 50% OFF everything. Clear out the year with massive savings!",
+		"design_button": "Grab Final Deals",
+		"style_bg_color": "#2C3E50",
+		"style_text_color": "#ECF0F1",
+		"style_headline_color": "#E74C3C",
+		"style_button_bg_color": "#E74C3C",
+		"style_button_text_color": "#ffffff",
+		"style_width": "520",
+		"style_border_radius": "8",
+		"style_border_width": "2",
+		"style_border_color": "#E74C3C",
+		"trigger_type": "exit",
+		"trigger_value": "0",
+		"success_action": "message",
+		"success_message": "🎁 Amazing! Your year-end discount is locked in!"
+	}
+}

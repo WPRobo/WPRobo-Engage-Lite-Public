@@ -1,0 +1,27 @@
+{
+	"name": "Christmas Holiday Special",
+	"description": "Festive Christmas template with holiday colors and seasonal messaging",
+	"category": "holiday",
+	"tags": ["christmas", "holiday", "winter", "seasonal"],
+	"thumbnail": "christmas-holiday.png",
+	"settings": {
+		"campaign_type": "popup",
+		"campaign_status": "draft",
+		"design_headline": "🎄 Unwrap Your Holiday Gift! 🎁",
+		"design_content": "Get 25% OFF your first order this Christmas season. Limited time offer!",
+		"design_button": "Get My Gift",
+		"style_bg_color": "#ffffff",
+		"style_text_color": "#165B33",
+		"style_headline_color": "#C41E3A",
+		"style_button_bg_color": "#165B33",
+		"style_button_text_color": "#ffffff",
+		"style_width": "500",
+		"style_border_radius": "12",
+		"style_border_width": "2",
+		"style_border_color": "#FFD700",
+		"trigger_type": "time",
+		"trigger_value": "5",
+		"success_action": "message",
+		"success_message": "🎅 Ho Ho Ho! Your holiday discount is on its way!"
+	}
+}

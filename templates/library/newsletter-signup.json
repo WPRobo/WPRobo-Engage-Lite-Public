@@ -1,0 +1,25 @@
+{
+	"name": "Newsletter Signup",
+	"description": "Simple and clean newsletter subscription form",
+	"category": "general",
+	"tags": ["newsletter", "subscription", "general"],
+	"thumbnail": "newsletter-signup.png",
+	"settings": {
+		"campaign_type": "popup",
+		"campaign_status": "draft",
+		"design_headline": "Stay in the Loop",
+		"design_content": "Subscribe to our newsletter for the latest updates, tips, and exclusive content delivered straight to your inbox.",
+		"design_button": "Subscribe Now",
+		"style_bg_color": "#f3f4f6",
+		"style_text_color": "#374151",
+		"style_headline_color": "#111827",
+		"style_button_bg_color": "#10b981",
+		"style_button_text_color": "#ffffff",
+		"style_width": "450",
+		"style_border_radius": "12",
+		"trigger_type": "scroll",
+		"trigger_value": "50",
+		"success_action": "message",
+		"success_message": "Welcome aboard! We're excited to have you with us."
+	}
+}

@@ -1,0 +1,27 @@
+{
+	"name": "Birthday Anniversary Celebration",
+	"description": "Customizable birthday or anniversary template for personal celebrations",
+	"category": "special-event",
+	"tags": ["birthday", "anniversary", "celebration", "personal"],
+	"thumbnail": "birthday-anniversary.png",
+	"settings": {
+		"campaign_type": "popup",
+		"campaign_status": "draft",
+		"design_headline": "🎉 Celebrate with Us! 🎂",
+		"design_content": "It's a special day! Enjoy 15% OFF to make your celebration even better.",
+		"design_button": "Claim Birthday Gift",
+		"style_bg_color": "#FFF0F5",
+		"style_text_color": "#8B008B",
+		"style_headline_color": "#FF1493",
+		"style_button_bg_color": "#FF69B4",
+		"style_button_text_color": "#ffffff",
+		"style_width": "500",
+		"style_border_radius": "15",
+		"style_border_width": "2",
+		"style_border_color": "#FF69B4",
+		"trigger_type": "time",
+		"trigger_value": "3",
+		"success_action": "message",
+		"success_message": "🎈 Happy celebrations! Your special discount is ready!"
+	}
+}

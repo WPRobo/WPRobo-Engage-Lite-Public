@@ -1,0 +1,27 @@
+{
+	"name": "Easter Egg Hunt Sale",
+	"description": "Cheerful Easter template with spring colors and festive messaging",
+	"category": "holiday",
+	"tags": ["easter", "spring", "seasonal", "april"],
+	"thumbnail": "easter.png",
+	"settings": {
+		"campaign_type": "popup",
+		"campaign_status": "draft",
+		"design_headline": "🐰 Easter Egg-cellent Savings! 🥚",
+		"design_content": "Hop into spring with 15% OFF your purchase. Find your perfect Easter gift today!",
+		"design_button": "Hunt for Deals",
+		"style_bg_color": "#FFFACD",
+		"style_text_color": "#8B4513",
+		"style_headline_color": "#FF69B4",
+		"style_button_bg_color": "#9370DB",
+		"style_button_text_color": "#ffffff",
+		"style_width": "500",
+		"style_border_radius": "15",
+		"style_border_width": "2",
+		"style_border_color": "#9370DB",
+		"trigger_type": "time",
+		"trigger_value": "5",
+		"success_action": "message",
+		"success_message": "🌸 Hoppy Easter! Your discount is hatching now!"
+	}
+}

@@ -1,0 +1,25 @@
+{
+	"name": "Welcome Discount",
+	"description": "Offer new visitors a special discount to encourage sign-ups",
+	"category": "general",
+	"tags": ["welcome", "discount", "new-visitor", "general"],
+	"thumbnail": "welcome-discount.png",
+	"settings": {
+		"campaign_type": "popup",
+		"campaign_status": "draft",
+		"design_headline": "Get 10% Off Your First Order!",
+		"design_content": "Join our newsletter and receive an exclusive discount code in your inbox.",
+		"design_button": "Claim My Discount",
+		"style_bg_color": "#ffffff",
+		"style_text_color": "#1f2937",
+		"style_headline_color": "#1f2937",
+		"style_button_bg_color": "#3b82f6",
+		"style_button_text_color": "#ffffff",
+		"style_width": "500",
+		"style_border_radius": "8",
+		"trigger_type": "time",
+		"trigger_value": "3",
+		"success_action": "message",
+		"success_message": "Thank you! Check your email for your discount code."
+	}
+}

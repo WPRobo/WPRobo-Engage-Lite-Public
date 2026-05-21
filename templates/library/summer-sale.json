@@ -1,0 +1,27 @@
+{
+	"name": "Summer Sale Sizzle",
+	"description": "Hot summer sale template with vibrant colors and beach vibes",
+	"category": "seasonal",
+	"tags": ["summer", "sale", "seasonal", "june", "july", "august"],
+	"thumbnail": "summer-sale.png",
+	"settings": {
+		"campaign_type": "popup",
+		"campaign_status": "draft",
+		"design_headline": "☀️ Summer Sizzle Sale! 🏖️",
+		"design_content": "Beat the heat with HOT deals! Get 25% OFF everything this summer.",
+		"design_button": "Get Summer Deals",
+		"style_bg_color": "#FFFAF0",
+		"style_text_color": "#FF8C00",
+		"style_headline_color": "#FF4500",
+		"style_button_bg_color": "#1E90FF",
+		"style_button_text_color": "#ffffff",
+		"style_width": "500",
+		"style_border_radius": "10",
+		"style_border_width": "2",
+		"style_border_color": "#FFD700",
+		"trigger_type": "time",
+		"trigger_value": "4",
+		"success_action": "message",
+		"success_message": "🌊 Wave of savings coming your way!"
+	}
+}

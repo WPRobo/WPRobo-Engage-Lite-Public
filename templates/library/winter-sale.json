@@ -1,0 +1,27 @@
+{
+	"name": "Winter Sale Wonderland",
+	"description": "Cool winter sale template with icy colors and cozy messaging",
+	"category": "seasonal",
+	"tags": ["winter", "sale", "seasonal", "december", "january", "february"],
+	"thumbnail": "winter-sale.png",
+	"settings": {
+		"campaign_type": "popup",
+		"campaign_status": "draft",
+		"design_headline": "❄️ Winter Wonderland Sale! ⛄",
+		"design_content": "Warm up to cool savings! Get 25% OFF to beat the winter chill.",
+		"design_button": "Shop Winter Sale",
+		"style_bg_color": "#F0F8FF",
+		"style_text_color": "#4682B4",
+		"style_headline_color": "#1E90FF",
+		"style_button_bg_color": "#4169E1",
+		"style_button_text_color": "#ffffff",
+		"style_width": "500",
+		"style_border_radius": "12",
+		"style_border_width": "2",
+		"style_border_color": "#ADD8E6",
+		"trigger_type": "time",
+		"trigger_value": "5",
+		"success_action": "message",
+		"success_message": "☃️ Snow much savings! Your discount is ready!"
+	}
+}

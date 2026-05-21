@@ -1,0 +1,27 @@
+{
+	"name": "Father's Day Sale",
+	"description": "Bold Father's Day template with masculine colors and gift ideas",
+	"category": "holiday",
+	"tags": ["fathers-day", "dad", "june", "family"],
+	"thumbnail": "fathers-day.png",
+	"settings": {
+		"campaign_type": "popup",
+		"campaign_status": "draft",
+		"design_headline": "🎁 Dad Deserves the Best! 👔",
+		"design_content": "Find the perfect gift for Dad with 20% OFF. Show him your appreciation this Father's Day!",
+		"design_button": "Shop for Dad",
+		"style_bg_color": "#F0F8FF",
+		"style_text_color": "#2F4F4F",
+		"style_headline_color": "#191970",
+		"style_button_bg_color": "#4682B4",
+		"style_button_text_color": "#ffffff",
+		"style_width": "500",
+		"style_border_radius": "8",
+		"style_border_width": "2",
+		"style_border_color": "#4682B4",
+		"trigger_type": "time",
+		"trigger_value": "4",
+		"success_action": "message",
+		"success_message": "🏆 Great choice! Dad will love it. Your discount is ready!"
+	}
+}

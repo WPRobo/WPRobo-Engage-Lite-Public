@@ -1,0 +1,35 @@
+{
+  "name": "wprobo/wprobo-engage-lite",
+  "description": "Grow your email list with beautiful popups, floating bars, and slide-ins.",
+  "type": "wordpress-plugin",
+  "license": "GPL-2.0-or-later",
+  "authors": [
+    {
+      "name": "WPRobo",
+      "homepage": "https://wprobo.com"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {},
+  "require-dev": {
+    "dealerdirect/phpcodesniffer-composer-installer": "^1.0",
+    "squizlabs/php_codesniffer": "^3.7",
+    "wp-coding-standards/wpcs": "^3.0",
+    "phpcompatibility/phpcompatibility-wp": "^2.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "WPRobo_Engage_Lite\\": "src/"
+    }
+  },
+  "scripts": {
+    "phpcs": "./vendor/bin/phpcs --standard=WordPress --extensions=php --ignore=*/vendor/*,*/node_modules/* src/",
+    "phpcbf": "./vendor/bin/phpcbf --standard=WordPress --extensions=php --ignore=*/vendor/*,*/node_modules/* src/"
+  },
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    },
+    "autoloader-suffix": "WPRoboEngageLite"
+  }
+}

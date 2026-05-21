@@ -1,0 +1,58 @@
+/* WPRobo Engage - Admin Tools page styles */
+
+.wpr-drop-zone {
+	position: relative;
+	border: 2px dashed #cbd5e1;
+	border-radius: 10px;
+	background: #f8fafc;
+	padding: 32px 20px;
+	text-align: center;
+	cursor: pointer;
+	transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.wpr-drop-zone:hover,
+.wpr-drop-zone:focus-visible {
+	border-color: #3b82f6;
+	background: #eff6ff;
+	outline: none;
+}
+
+.wpr-drop-zone.wpr-drop-active {
+	border-color: #2563eb;
+	background: #dbeafe;
+}
+
+.wpr-drop-zone.wpr-drop-valid  { border-color: #16a34a; background: #f0fdf4; }
+.wpr-drop-zone.wpr-drop-invalid { border-color: #dc2626; background: #fef2f2; }
+
+.wpr-drop-icon { color: #64748b; margin-bottom: 12px; display: flex; justify-content: center; }
+.wpr-drop-primary { margin: 0 0 6px; font-size: 15px; font-weight: 600; color: #0f172a; }
+.wpr-drop-secondary { margin: 0 0 12px; font-size: 13px; color: #64748b; }
+
+.wpr-visually-hidden {
+	position: absolute !important;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0 0 0 0);
+	white-space: nowrap;
+	border: 0;
+}
+
+.wpr-import-status {
+	padding: 12px 14px;
+	border-radius: 8px;
+	font-size: 13px;
+	display: flex;
+	align-items: flex-start;
+	gap: 10px;
+	line-height: 1.5;
+}
+
+.wpr-import-status.wpr-status-valid   { background: #f0fdf4; border: 1px solid #bbf7d0; color: #166534; }
+.wpr-import-status.wpr-status-invalid { background: #fef2f2; border: 1px solid #fecaca; color: #b91c1c; }
+
+#wpr-import-submit:disabled { opacity: 0.5; cursor: not-allowed; }
