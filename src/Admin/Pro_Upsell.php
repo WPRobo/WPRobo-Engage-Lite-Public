@@ -49,5 +49,4 @@ class Pro_Upsell {
 
 		return $html;
 	}
-
 }

@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Meta_Box {
 
 	/**
-	 * Adds the meta box to the 'wpr_campaign' post type.
+	 * Adds the meta box to the 'wpre_campaign' post type.
 	 * Hooked into 'add_meta_boxes'.
 	 *
 	 * @return void
@@ -25,7 +25,7 @@ class Meta_Box {
 			'wprobo_engage_settings',
 			esc_html__( 'Campaign Settings', 'wprobo-engage-lite' ),
 			array( $this, 'render_meta_box_html' ),
-			'wpr_campaign',
+			'wpre_campaign',
 			'normal',
 			'high'
 		);
@@ -55,20 +55,20 @@ class Meta_Box {
 		};
 
 		// Get existing values.
-		$campaign_type     = $get( '_wpr_engage_campaign_type' );
-		$campaign_status   = $get( '_wpr_engage_campaign_status' );
-		$headline          = $get( '_wpr_engage_design_headline' );
-		$content           = $get( '_wpr_engage_design_content' );
-		$button            = $get( '_wpr_engage_design_button' );
-		$email_placeholder = $get( '_wpr_engage_design_email_placeholder' );
-		$display_rules     = $get( '_wpr_engage_display_rules', array() );
-		$rule_groups       = $get( '_wpr_engage_rule_groups', array() );
+		$campaign_type     = $get( '_wpre_engage_campaign_type' );
+		$campaign_status   = $get( '_wpre_engage_campaign_status' );
+		$headline          = $get( '_wpre_engage_design_headline' );
+		$content           = $get( '_wpre_engage_design_content' );
+		$button            = $get( '_wpre_engage_design_button' );
+		$email_placeholder = $get( '_wpre_engage_design_email_placeholder' );
+		$display_rules     = $get( '_wpre_engage_display_rules', array() );
+		$rule_groups       = $get( '_wpre_engage_rule_groups', array() );
 
 		// Get form configuration values.
-		$form_type      = $get( '_wpr_engage_form_type' );
-		$form_fields    = $get( '_wpr_engage_form_fields', array() );
-		$embed_code     = $get( '_wpr_engage_embed_code' );
-		$embed_provider = $get( '_wpr_engage_embed_provider' );
+		$form_type      = $get( '_wpre_engage_form_type' );
+		$form_fields    = $get( '_wpre_engage_form_fields', array() );
+		$embed_code     = $get( '_wpre_engage_embed_code' );
+		$embed_provider = $get( '_wpre_engage_embed_provider' );
 
 		// Set defaults.
 		if ( empty( $form_type ) ) {
@@ -89,61 +89,61 @@ class Meta_Box {
 		}
 
 		// Get style values.
-		$bg_color              = $get( '_wpr_engage_style_bg_color' );
-		$headline_color        = $get( '_wpr_engage_style_headline_color' );
-		$content_color         = $get( '_wpr_engage_style_content_color' );
-		$button_bg_color       = $get( '_wpr_engage_style_button_bg_color' );
-		$button_text_color     = $get( '_wpr_engage_style_button_text_color' );
-		$border_radius         = $get( '_wpr_engage_style_border_radius' );
-		$border_width          = $get( '_wpr_engage_style_border_width' );
-		$border_color          = $get( '_wpr_engage_style_border_color' );
-		$box_shadow_enabled    = $get( '_wpr_engage_style_box_shadow_enabled' );
-		$box_shadow_color      = $get( '_wpr_engage_style_box_shadow_color' );
-		$box_shadow_x          = $get( '_wpr_engage_style_box_shadow_x' );
-		$box_shadow_y          = $get( '_wpr_engage_style_box_shadow_y' );
-		$box_shadow_blur       = $get( '_wpr_engage_style_box_shadow_blur' );
-		$box_shadow_spread     = $get( '_wpr_engage_style_box_shadow_spread' );
-		$bg_image_url          = $get( '_wpr_engage_style_bg_image_url' );
-		$bg_image_repeat       = $get( '_wpr_engage_style_bg_image_repeat' );
-		$bg_image_position     = $get( '_wpr_engage_style_bg_image_position' );
-		$bg_image_size         = $get( '_wpr_engage_style_bg_image_size' );
-		$bg_media_type         = $get( '_wpr_engage_style_bg_media_type' );
-		$bg_video_url          = $get( '_wpr_engage_style_bg_video_url' );
-		$bg_video_autoplay     = $get( '_wpr_engage_style_bg_video_autoplay' );
-		$bg_video_loop         = $get( '_wpr_engage_style_bg_video_loop' );
-		$bg_video_muted        = $get( '_wpr_engage_style_bg_video_muted' );
-		$bg_youtube_url        = $get( '_wpr_engage_style_bg_youtube_url' );
-		$bg_vimeo_url          = $get( '_wpr_engage_style_bg_vimeo_url' );
-		$close_btn_color       = $get( '_wpr_engage_style_close_btn_color' );
-		$close_btn_hover_color = $get( '_wpr_engage_style_close_btn_hover_color' );
-		$close_btn_bg_color    = $get( '_wpr_engage_style_close_btn_bg_color' );
-		$close_btn_shape       = $get( '_wpr_engage_style_close_btn_shape' );
-		$esc_to_close          = $get( '_wpr_engage_esc_to_close' );
-		$show_close_icon       = $get( '_wpr_engage_show_close_icon' );
-		$preview_button_bg   = $button_bg_color ? $button_bg_color : '#3b82f6';
-		$preview_button_text = $button_text_color ? $button_text_color : '#ffffff';
+		$bg_color              = $get( '_wpre_engage_style_bg_color' );
+		$headline_color        = $get( '_wpre_engage_style_headline_color' );
+		$content_color         = $get( '_wpre_engage_style_content_color' );
+		$button_bg_color       = $get( '_wpre_engage_style_button_bg_color' );
+		$button_text_color     = $get( '_wpre_engage_style_button_text_color' );
+		$border_radius         = $get( '_wpre_engage_style_border_radius' );
+		$border_width          = $get( '_wpre_engage_style_border_width' );
+		$border_color          = $get( '_wpre_engage_style_border_color' );
+		$box_shadow_enabled    = $get( '_wpre_engage_style_box_shadow_enabled' );
+		$box_shadow_color      = $get( '_wpre_engage_style_box_shadow_color' );
+		$box_shadow_x          = $get( '_wpre_engage_style_box_shadow_x' );
+		$box_shadow_y          = $get( '_wpre_engage_style_box_shadow_y' );
+		$box_shadow_blur       = $get( '_wpre_engage_style_box_shadow_blur' );
+		$box_shadow_spread     = $get( '_wpre_engage_style_box_shadow_spread' );
+		$bg_image_url          = $get( '_wpre_engage_style_bg_image_url' );
+		$bg_image_repeat       = $get( '_wpre_engage_style_bg_image_repeat' );
+		$bg_image_position     = $get( '_wpre_engage_style_bg_image_position' );
+		$bg_image_size         = $get( '_wpre_engage_style_bg_image_size' );
+		$bg_media_type         = $get( '_wpre_engage_style_bg_media_type' );
+		$bg_video_url          = $get( '_wpre_engage_style_bg_video_url' );
+		$bg_video_autoplay     = $get( '_wpre_engage_style_bg_video_autoplay' );
+		$bg_video_loop         = $get( '_wpre_engage_style_bg_video_loop' );
+		$bg_video_muted        = $get( '_wpre_engage_style_bg_video_muted' );
+		$bg_youtube_url        = $get( '_wpre_engage_style_bg_youtube_url' );
+		$bg_vimeo_url          = $get( '_wpre_engage_style_bg_vimeo_url' );
+		$close_btn_color       = $get( '_wpre_engage_style_close_btn_color' );
+		$close_btn_hover_color = $get( '_wpre_engage_style_close_btn_hover_color' );
+		$close_btn_bg_color    = $get( '_wpre_engage_style_close_btn_bg_color' );
+		$close_btn_shape       = $get( '_wpre_engage_style_close_btn_shape' );
+		$esc_to_close          = $get( '_wpre_engage_esc_to_close' );
+		$show_close_icon       = $get( '_wpre_engage_show_close_icon' );
+		$preview_button_bg     = $button_bg_color ? $button_bg_color : '#3b82f6';
+		$preview_button_text   = $button_text_color ? $button_text_color : '#ffffff';
 
-		$success_action           = $get( '_wpr_engage_success_action' );
-		$success_redirect_url     = $get( '_wpr_engage_success_redirect_url' );
-		$success_message_headline = $get( '_wpr_engage_success_message_headline' );
-		$success_message_content  = $get( '_wpr_engage_success_message_content' );
-		$success_auto_close       = $get( '_wpr_engage_success_auto_close' );
-		$success_auto_close_delay = $get( '_wpr_engage_success_auto_close_delay' );
-		$success_redirect_delay   = $get( '_wpr_engage_success_redirect_delay' );
-		$success_redirect_new_tab = $get( '_wpr_engage_success_redirect_new_tab' );
+		$success_action           = $get( '_wpre_engage_success_action' );
+		$success_redirect_url     = $get( '_wpre_engage_success_redirect_url' );
+		$success_message_headline = $get( '_wpre_engage_success_message_headline' );
+		$success_message_content  = $get( '_wpre_engage_success_message_content' );
+		$success_auto_close       = $get( '_wpre_engage_success_auto_close' );
+		$success_auto_close_delay = $get( '_wpre_engage_success_auto_close_delay' );
+		$success_redirect_delay   = $get( '_wpre_engage_success_redirect_delay' );
+		$success_redirect_new_tab = $get( '_wpre_engage_success_redirect_new_tab' );
 
 		// Get success icon settings.
-		$success_show_icon  = $get( '_wpr_engage_success_show_icon' );
-		$success_icon_type  = $get( '_wpr_engage_success_icon_type' );
-		$success_icon_color = $get( '_wpr_engage_success_icon_color' );
+		$success_show_icon  = $get( '_wpre_engage_success_show_icon' );
+		$success_icon_type  = $get( '_wpre_engage_success_icon_type' );
+		$success_icon_color = $get( '_wpre_engage_success_icon_color' );
 
 		// Get success message styling.
-		$success_title_color         = $get( '_wpr_engage_success_title_color' );
-		$success_content_color       = $get( '_wpr_engage_success_content_color' );
-		$success_title_font_size     = $get( '_wpr_engage_success_title_font_size' );
-		$success_content_font_size   = $get( '_wpr_engage_success_content_font_size' );
-		$success_title_font_weight   = $get( '_wpr_engage_success_title_font_weight' );
-		$success_content_font_weight = $get( '_wpr_engage_success_content_font_weight' );
+		$success_title_color         = $get( '_wpre_engage_success_title_color' );
+		$success_content_color       = $get( '_wpre_engage_success_content_color' );
+		$success_title_font_size     = $get( '_wpre_engage_success_title_font_size' );
+		$success_content_font_size   = $get( '_wpre_engage_success_content_font_size' );
+		$success_title_font_weight   = $get( '_wpre_engage_success_title_font_weight' );
+		$success_content_font_weight = $get( '_wpre_engage_success_content_font_weight' );
 
 		// Get discount code.
 
@@ -196,19 +196,19 @@ class Meta_Box {
 			$success_content_font_weight = 'normal';
 		}
 		// Get trigger values.
-		$trigger_type  = $get( '_wpr_engage_trigger_type' );
-		$trigger_value = $get( '_wpr_engage_trigger_value' );
+		$trigger_type  = $get( '_wpre_engage_trigger_type' );
+		$trigger_value = $get( '_wpre_engage_trigger_value' );
 
 		// Get schedule settings.
-		$schedule_enabled            = $get( '_wpr_engage_schedule_enabled' );
-		$schedule_start_date         = $get( '_wpr_engage_schedule_start_date' );
-		$schedule_start_time         = $get( '_wpr_engage_schedule_start_time' );
-		$schedule_end_date           = $get( '_wpr_engage_schedule_end_date' );
-		$schedule_end_time           = $get( '_wpr_engage_schedule_end_time' );
-		$schedule_days_of_week       = $get( '_wpr_engage_schedule_days_of_week', array() );
-		$schedule_time_range_enabled = $get( '_wpr_engage_schedule_time_range_enabled' );
-		$schedule_time_start         = $get( '_wpr_engage_schedule_time_start' );
-		$schedule_time_end           = $get( '_wpr_engage_schedule_time_end' );
+		$schedule_enabled            = $get( '_wpre_engage_schedule_enabled' );
+		$schedule_start_date         = $get( '_wpre_engage_schedule_start_date' );
+		$schedule_start_time         = $get( '_wpre_engage_schedule_start_time' );
+		$schedule_end_date           = $get( '_wpre_engage_schedule_end_date' );
+		$schedule_end_time           = $get( '_wpre_engage_schedule_end_time' );
+		$schedule_days_of_week       = $get( '_wpre_engage_schedule_days_of_week', array() );
+		$schedule_time_range_enabled = $get( '_wpre_engage_schedule_time_range_enabled' );
+		$schedule_time_start         = $get( '_wpre_engage_schedule_time_start' );
+		$schedule_time_end           = $get( '_wpre_engage_schedule_time_end' );
 
 		// Set schedule defaults.
 		if ( ! is_array( $schedule_days_of_week ) ) {
@@ -216,10 +216,10 @@ class Meta_Box {
 		}
 
 		// Get floating bar specific settings.
-		$bar_position = get_post_meta( $post->ID, '_wpr_engage_bar_position', true );
+		$bar_position = get_post_meta( $post->ID, '_wpre_engage_bar_position', true );
 
 		// Get slide-in specific settings.
-		$slide_position = get_post_meta( $post->ID, '_wpr_engage_slide_position', true );
+		$slide_position = get_post_meta( $post->ID, '_wpre_engage_slide_position', true );
 
 		// Ensure display_rules is an array
 		if ( ! is_array( $display_rules ) ) {
@@ -239,7 +239,7 @@ class Meta_Box {
 					<label for="wpr-engage-type"><?php esc_html_e( 'Campaign Type', 'wprobo-engage-lite' ); ?></label>
 				</th>
 				<td>
-					<select name="wpr_engage_campaign_type" id="wpr-engage-type" class="postbox">
+					<select name="wpre_engage_campaign_type" id="wpr-engage-type" class="postbox">
 						<option value="popup" <?php selected( $campaign_type, 'popup' ); ?>><?php esc_html_e( 'Lightbox Popup', 'wprobo-engage-lite' ); ?></option>
 						<option value="floating-bar" <?php selected( $campaign_type, 'floating-bar' ); ?>><?php esc_html_e( 'Floating Bar', 'wprobo-engage-lite' ); ?></option>
 						<option value="slide-in" <?php selected( $campaign_type, 'slide-in' ); ?>><?php esc_html_e( 'Slide-in', 'wprobo-engage-lite' ); ?></option>
@@ -251,7 +251,7 @@ class Meta_Box {
 					<label for="wpr-engage-status"><?php esc_html_e( 'Status', 'wprobo-engage-lite' ); ?></label>
 				</th>
 				<td>
-					<select name="wpr_engage_campaign_status" id="wpr-engage-status" class="postbox">
+					<select name="wpre_engage_campaign_status" id="wpr-engage-status" class="postbox">
 						<option value="paused" <?php selected( $campaign_status, 'paused' ); ?>><?php esc_html_e( 'Paused', 'wprobo-engage-lite' ); ?></option>
 						<option value="active" <?php selected( $campaign_status, 'active' ); ?>><?php esc_html_e( 'Active', 'wprobo-engage-lite' ); ?></option>
 					</select>
@@ -260,12 +260,12 @@ class Meta_Box {
 					</p>
 				</td>
 			</tr>
-			<tr id="wpr-bar-position-row" style="<?php echo 'floating-bar' === $campaign_type ? '' : 'display: none;'; ?>">
+			<tr id="wpr-bar-position-row" style="<?php echo esc_attr( 'floating-bar' === $campaign_type ? '' : 'display: none;' ); ?>">
 				<th>
 					<label for="wpr-engage-bar-position"><?php esc_html_e( 'Bar Position', 'wprobo-engage-lite' ); ?></label>
 				</th>
 				<td>
-					<select name="wpr_engage_bar_position" id="wpr-engage-bar-position" class="postbox">
+					<select name="wpre_engage_bar_position" id="wpr-engage-bar-position" class="postbox">
 						<option value="top" <?php selected( $bar_position, 'top' ); ?>><?php esc_html_e( 'Top', 'wprobo-engage-lite' ); ?></option>
 						<option value="bottom" <?php selected( $bar_position, 'bottom' ); ?>><?php esc_html_e( 'Bottom', 'wprobo-engage-lite' ); ?></option>
 					</select>
@@ -274,12 +274,12 @@ class Meta_Box {
 					</p>
 				</td>
 			</tr>
-			<tr id="wpr-slide-position-row" style="<?php echo 'slide-in' === $campaign_type ? '' : 'display: none;'; ?>">
+			<tr id="wpr-slide-position-row" style="<?php echo esc_attr( 'slide-in' === $campaign_type ? '' : 'display: none;' ); ?>">
 				<th>
 					<label for="wpr-engage-slide-position"><?php esc_html_e( 'Slide-in Position', 'wprobo-engage-lite' ); ?></label>
 				</th>
 				<td>
-					<select name="wpr_engage_slide_position" id="wpr-engage-slide-position" class="postbox">
+					<select name="wpre_engage_slide_position" id="wpr-engage-slide-position" class="postbox">
 						<option value="bottom-right" <?php selected( $slide_position, 'bottom-right' ); ?>><?php esc_html_e( 'Bottom Right', 'wprobo-engage-lite' ); ?></option>
 						<option value="bottom-left" <?php selected( $slide_position, 'bottom-left' ); ?>><?php esc_html_e( 'Bottom Left', 'wprobo-engage-lite' ); ?></option>
 						<option value="top-right" <?php selected( $slide_position, 'top-right' ); ?>><?php esc_html_e( 'Top Right', 'wprobo-engage-lite' ); ?></option>
@@ -298,8 +298,8 @@ class Meta_Box {
 			
 			<!-- Tabs Navigation -->
 			<?php
-			$pro_badge    = ' ' . Pro_Upsell::render_badge();
-			$editor_tabs  = array(
+			$pro_badge   = ' ' . Pro_Upsell::render_badge();
+			$editor_tabs = array(
 				'design'        => __( 'Design', 'wprobo-engage-lite' ),
 				'triggers'      => __( 'Triggers', 'wprobo-engage-lite' ),
 				'urgency'       => __( 'Urgency', 'wprobo-engage-lite' ) . $pro_badge,
@@ -318,12 +318,22 @@ class Meta_Box {
 						role="tab"
 						id="wpr-tab-btn-<?php echo esc_attr( $tab_key ); ?>"
 						aria-controls="wpr-tab-<?php echo esc_attr( $tab_key ); ?>"
-						aria-selected="<?php echo $first_tab ? 'true' : 'false'; ?>"
-						<?php echo $first_tab ? '' : 'tabindex="-1"'; ?>
-						class="wpr-tab-button wpr-flex-1 wpr-py-3 wpr-px-4 wpr-text-sm wpr-font-medium <?php echo $first_tab ? 'wpr-text-gray-700 wpr-border-b-2 wpr-border-blue-500' : 'wpr-text-gray-500 wpr-border-b-2 wpr-border-transparent'; ?> wpr-bg-white"
+						aria-selected="<?php echo esc_attr( $first_tab ? 'true' : 'false' ); ?>"
+						<?php echo esc_attr( $first_tab ? '' : 'tabindex="-1"' ); ?>
+						class="wpr-tab-button wpr-flex-1 wpr-py-3 wpr-px-4 wpr-text-sm wpr-font-medium <?php echo esc_attr( $first_tab ? 'wpr-text-gray-700 wpr-border-b-2 wpr-border-blue-500' : 'wpr-text-gray-500 wpr-border-b-2 wpr-border-transparent' ); ?> wpr-bg-white"
 						data-tab="<?php echo esc_attr( $tab_key ); ?>"
 						style="flex: 0 0 auto; padding: 12px 16px; background: white; cursor: pointer; white-space: nowrap;">
-						<?php echo wp_kses( $tab_label, array( 'span' => array( 'class' => array(), 'style' => array() ) ) ); ?>
+						<?php
+						echo wp_kses(
+							$tab_label,
+							array(
+								'span' => array(
+									'class' => array(),
+									'style' => array(),
+								),
+							)
+						);
+						?>
 					</button>
 					<?php $first_tab = false; ?>
 				<?php endforeach; ?>
@@ -457,7 +467,7 @@ class Meta_Box {
 										<input type="checkbox" id="wpr-box-shadow-enabled" value="1" <?php checked( $box_shadow_enabled, '1' ); ?>>
 										<span><?php esc_html_e( 'Enable Box Shadow', 'wprobo-engage-lite' ); ?></span>
 									</label>
-									<div id="wpr-box-shadow-controls" style="<?php echo ( $box_shadow_enabled !== '1' ) ? 'display:none;' : 'display:flex;flex-direction:column;gap:12px;'; ?>">
+									<div id="wpr-box-shadow-controls" style="<?php echo esc_attr( ( $box_shadow_enabled !== '1' ) ? 'display:none;' : 'display:flex;flex-direction:column;gap:12px;' ); ?>">
 										<div>
 											<label for="wpr-box-shadow-color" class="wpr-field-label"><?php esc_html_e( 'Shadow Color', 'wprobo-engage-lite' ); ?></label>
 											<input type="text" id="wpr-box-shadow-color" value="<?php echo esc_attr( $box_shadow_color ?: '#000000' ); ?>" class="wpr-color-picker" style="width:100%;">
@@ -510,7 +520,7 @@ class Meta_Box {
 									</div>
 
 									<!-- Image Background Settings -->
-									<div id="wpr-bg-image-settings" style="<?php echo ( ! $bg_media_type || $bg_media_type === 'image' ) ? 'display:flex;flex-direction:column;gap:10px;' : 'display:none;'; ?>">
+									<div id="wpr-bg-image-settings" style="<?php echo esc_attr( ( ! $bg_media_type || $bg_media_type === 'image' ) ? 'display:flex;flex-direction:column;gap:10px;' : 'display:none;' ); ?>">
 										<div>
 											<label for="wpr-bg-image-url" class="wpr-field-label"><?php esc_html_e( 'Image URL', 'wprobo-engage-lite' ); ?></label>
 											<input type="text" id="wpr-bg-image-url" value="<?php echo esc_attr( $bg_image_url ); ?>" placeholder="https://example.com/image.jpg" class="wpr-field-input">
@@ -547,7 +557,7 @@ class Meta_Box {
 									</div>
 
 									<!-- Video Background Settings -->
-									<div id="wpr-bg-video-settings" style="<?php echo ( $bg_media_type === 'video' ) ? 'display:flex;flex-direction:column;gap:10px;' : 'display:none;'; ?>">
+									<div id="wpr-bg-video-settings" style="<?php echo esc_attr( ( $bg_media_type === 'video' ) ? 'display:flex;flex-direction:column;gap:10px;' : 'display:none;' ); ?>">
 										<div>
 											<label for="wpr-bg-video-url" class="wpr-field-label"><?php esc_html_e( 'Video URL (MP4/WebM)', 'wprobo-engage-lite' ); ?></label>
 											<input type="text" id="wpr-bg-video-url" value="<?php echo esc_attr( $bg_video_url ); ?>" placeholder="https://example.com/video.mp4" class="wpr-field-input">
@@ -560,13 +570,13 @@ class Meta_Box {
 									</div>
 
 									<!-- YouTube Background Settings -->
-									<div id="wpr-bg-youtube-settings" style="<?php echo ( $bg_media_type === 'youtube' ) ? '' : 'display:none;'; ?>">
+									<div id="wpr-bg-youtube-settings" style="<?php echo esc_attr( ( $bg_media_type === 'youtube' ) ? '' : 'display:none;' ); ?>">
 										<label for="wpr-bg-youtube-url" class="wpr-field-label"><?php esc_html_e( 'YouTube URL', 'wprobo-engage-lite' ); ?></label>
 										<input type="text" id="wpr-bg-youtube-url" value="<?php echo esc_attr( $bg_youtube_url ); ?>" placeholder="https://www.youtube.com/watch?v=..." class="wpr-field-input">
 									</div>
 
 									<!-- Vimeo Background Settings -->
-									<div id="wpr-bg-vimeo-settings" style="<?php echo ( $bg_media_type === 'vimeo' ) ? '' : 'display:none;'; ?>">
+									<div id="wpr-bg-vimeo-settings" style="<?php echo esc_attr( ( $bg_media_type === 'vimeo' ) ? '' : 'display:none;' ); ?>">
 										<label for="wpr-bg-vimeo-url" class="wpr-field-label"><?php esc_html_e( 'Vimeo URL', 'wprobo-engage-lite' ); ?></label>
 										<input type="text" id="wpr-bg-vimeo-url" value="<?php echo esc_attr( $bg_vimeo_url ); ?>" placeholder="https://vimeo.com/123456789" class="wpr-field-input">
 									</div>
@@ -645,7 +655,7 @@ class Meta_Box {
 								<div class="wpr-grid wpr-gap-4" style="display: grid; grid-template-columns: 1fr; gap: 16px;">
 									<!-- Native Radio Card -->
 									<label style="position: relative; cursor: pointer; display: block; outline: none; margin-bottom: 0;">
-										<input type="radio" name="wpr_engage_form_type" value="native" <?php checked( $form_type, 'native' ); ?> style="position: absolute; opacity: 0; width: 0; height: 0;" class="wpr-peer">
+										<input type="radio" name="wpre_engage_form_type" value="native" <?php checked( $form_type, 'native' ); ?> style="position: absolute; opacity: 0; width: 0; height: 0;" class="wpr-peer">
 										<div style="padding: 24px 20px; border-radius: 12px; height: 100%; border: 2px solid #e2e8f0; background: #ffffff; transition: all 0.2s;" class="wpr-radio-card">
 											<div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 14px;">
 												<div style="display: flex; align-items: flex-start; gap: 14px; flex: 1;">
@@ -663,7 +673,7 @@ class Meta_Box {
 									</label>
 									<!-- Embed Radio Card -->
 									<label style="position: relative; cursor: pointer; display: block; outline: none; margin-bottom: 0;">
-										<input type="radio" name="wpr_engage_form_type" value="embed" <?php checked( $form_type, 'embed' ); ?> style="position: absolute; opacity: 0; width: 0; height: 0;" class="wpr-peer">
+										<input type="radio" name="wpre_engage_form_type" value="embed" <?php checked( $form_type, 'embed' ); ?> style="position: absolute; opacity: 0; width: 0; height: 0;" class="wpr-peer">
 										<div style="padding: 24px 20px; border-radius: 12px; height: 100%; border: 2px solid #e2e8f0; background: #ffffff; transition: all 0.2s;" class="wpr-radio-card">
 											<div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 14px;">
 												<div style="display: flex; align-items: flex-start; gap: 14px; flex: 1;">
@@ -686,7 +696,7 @@ class Meta_Box {
 							<div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 24px; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);">
 								
 								<!-- Built-in Form Builder (Native) -->
-								<div id="wpr-native-form-builder" style="<?php echo 'native' === $form_type ? '' : 'display: none;'; ?>">
+								<div id="wpr-native-form-builder" style="<?php echo esc_attr( 'native' === $form_type ? '' : 'display: none;' ); ?>">
 									<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
 										<h4 style="margin: 0; font-size: 14px; font-weight: 700; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;"><?php esc_html_e( 'Form Fields', 'wprobo-engage-lite' ); ?></h4>
 										<button type="button" id="wpr-add-form-field" class="button button-primary wpr-btn-gradient" style="display: flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #0f172a 0%, #1e40af 100%); border: none; color: white; padding: 8px 16px; border-radius: 8px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 6px rgba(15, 23, 42, 0.15);">
@@ -702,7 +712,7 @@ class Meta_Box {
 													<div style="display: flex; align-items: center; gap: 10px;">
 														<span class="wpr-drag-handle" style="cursor: grab; color: #cbd5e1; font-size: 16px; line-height: 1; user-select: none;" title="<?php esc_attr_e( 'Drag to reorder', 'wprobo-engage-lite' ); ?>">⠿</span>
 														<span class="wpr-field-number" style="font-size: 12px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.025em;"><?php echo esc_html__( 'Field #', 'wprobo-engage-lite' ) . esc_html( $index + 1 ); ?></span>
-														<select name="wpr_engage_form_fields[<?php echo esc_attr( $index ); ?>][type]" class="wpr-field-type" style="height: 34px; font-size: 13px; border-radius: 6px; padding: 0 10px; border: 1px solid #cbd5e1; outline: none; background: white; color: #334155;">
+														<select name="wpre_engage_form_fields[<?php echo esc_attr( $index ); ?>][type]" class="wpr-field-type" style="height: 34px; font-size: 13px; border-radius: 6px; padding: 0 10px; border: 1px solid #cbd5e1; outline: none; background: white; color: #334155;">
 															<option value="email" <?php selected( $field['type'], 'email' ); ?>><?php esc_html_e( 'Email', 'wprobo-engage-lite' ); ?></option>
 															<option value="text" <?php selected( $field['type'], 'text' ); ?>><?php esc_html_e( 'Text', 'wprobo-engage-lite' ); ?></option>
 															<option value="phone" <?php selected( $field['type'], 'phone' ); ?>><?php esc_html_e( 'Phone', 'wprobo-engage-lite' ); ?></option>
@@ -717,15 +727,15 @@ class Meta_Box {
 												<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 12px;">
 													<div>
 														<label style="display: block; font-size: 11px; font-weight: 700; color: #64748b; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.025em;"><?php esc_html_e( 'Label', 'wprobo-engage-lite' ); ?></label>
-														<input type="text" name="wpr_engage_form_fields[<?php echo esc_attr( $index ); ?>][label]" value="<?php echo esc_attr( $field['label'] ?? '' ); ?>" placeholder="<?php esc_attr_e( 'e.g. Full Name', 'wprobo-engage-lite' ); ?>" class="wpr-field-label-input" style="width: 100%; height: 40px; font-size: 13px; border-radius: 8px; border: 1px solid #cbd5e1; padding: 0 12px; background: white; color: #334155;">
+														<input type="text" name="wpre_engage_form_fields[<?php echo esc_attr( $index ); ?>][label]" value="<?php echo esc_attr( $field['label'] ?? '' ); ?>" placeholder="<?php esc_attr_e( 'e.g. Full Name', 'wprobo-engage-lite' ); ?>" class="wpr-field-label-input" style="width: 100%; height: 40px; font-size: 13px; border-radius: 8px; border: 1px solid #cbd5e1; padding: 0 12px; background: white; color: #334155;">
 													</div>
 													<div>
 														<label style="display: block; font-size: 11px; font-weight: 700; color: #64748b; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.025em;"><?php esc_html_e( 'Placeholder', 'wprobo-engage-lite' ); ?></label>
-														<input type="text" name="wpr_engage_form_fields[<?php echo esc_attr( $index ); ?>][placeholder]" value="<?php echo esc_attr( $field['placeholder'] ?? '' ); ?>" placeholder="<?php esc_attr_e( 'e.g. Enter your name', 'wprobo-engage-lite' ); ?>" class="wpr-field-placeholder-input" style="width: 100%; height: 40px; font-size: 13px; border-radius: 8px; border: 1px solid #cbd5e1; padding: 0 12px; background: white; color: #334155;">
+														<input type="text" name="wpre_engage_form_fields[<?php echo esc_attr( $index ); ?>][placeholder]" value="<?php echo esc_attr( $field['placeholder'] ?? '' ); ?>" placeholder="<?php esc_attr_e( 'e.g. Enter your name', 'wprobo-engage-lite' ); ?>" class="wpr-field-placeholder-input" style="width: 100%; height: 40px; font-size: 13px; border-radius: 8px; border: 1px solid #cbd5e1; padding: 0 12px; background: white; color: #334155;">
 													</div>
 												</div>
 												<label style="display: flex; align-items: center; gap: 10px; font-size: 13px; cursor: pointer; color: #475569; font-weight: 500;">
-													<input type="checkbox" name="wpr_engage_form_fields[<?php echo esc_attr( $index ); ?>][required]" value="1" <?php checked( ! empty( $field['required'] ) ); ?> style="width: 18px; height: 18px; border-radius: 4px; border-color: #cbd5e1;">
+													<input type="checkbox" name="wpre_engage_form_fields[<?php echo esc_attr( $index ); ?>][required]" value="1" <?php checked( ! empty( $field['required'] ) ); ?> style="width: 18px; height: 18px; border-radius: 4px; border-color: #cbd5e1;">
 													<?php esc_html_e( 'Required Field', 'wprobo-engage-lite' ); ?>
 												</label>
 											</div>
@@ -734,10 +744,10 @@ class Meta_Box {
 								</div>
 
 								<!-- Embed Third-Party Form -->
-								<div id="wpr-embed-form-section" style="<?php echo 'embed' === $form_type ? '' : 'display: none;'; ?>">
+								<div id="wpr-embed-form-section" style="<?php echo esc_attr( 'embed' === $form_type ? '' : 'display: none;' ); ?>">
 									<div class="wpr-mb-6" style="margin-bottom: 24px;">
 										<label for="wpr-embed-provider" class="wpr-block wpr-text-xs wpr-font-bold wpr-text-slate-500 wpr-mb-2" style="text-transform: uppercase;"><?php esc_html_e( 'Email Service Provider', 'wprobo-engage-lite' ); ?></label>
-										<select name="wpr_engage_embed_provider" id="wpr-embed-provider" class="wpr-mt-1 wpr-block wpr-w-full wpr-border wpr-border-slate-200 wpr-rounded-lg wpr-p-3" style="width: 100%; height: 44px; outline: none; border-color: #cbd5e1; background: white;">
+										<select name="wpre_engage_embed_provider" id="wpr-embed-provider" class="wpr-mt-1 wpr-block wpr-w-full wpr-border wpr-border-slate-200 wpr-rounded-lg wpr-p-3" style="width: 100%; height: 44px; outline: none; border-color: #cbd5e1; background: white;">
 											<option value="generic" <?php selected( $embed_provider, 'generic' ); ?>><?php esc_html_e( 'Generic HTML/JavaScript', 'wprobo-engage-lite' ); ?></option>
 											<option value="mailchimp" <?php selected( $embed_provider, 'mailchimp' ); ?>><?php esc_html_e( 'Mailchimp', 'wprobo-engage-lite' ); ?></option>
 											<option value="convertkit" <?php selected( $embed_provider, 'convertkit' ); ?>><?php esc_html_e( 'ConvertKit', 'wprobo-engage-lite' ); ?></option>
@@ -748,7 +758,7 @@ class Meta_Box {
 
 									<div class="wpr-mt-6" style="margin-top: 24px;">
 										<label for="wpr-embed-code" class="wpr-block wpr-text-xs wpr-font-bold wpr-text-slate-500 wpr-mb-2" style="text-transform: uppercase;"><?php esc_html_e( 'Embed Code (HTML)', 'wprobo-engage-lite' ); ?></label>
-										<textarea name="wpr_engage_embed_code" id="wpr-embed-code" rows="10" style="width: 100%; padding: 16px; border: 1px solid #e2e8f0; border-radius: 12px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 13px; color: #334155; background: #f8fafc; line-height: 1.6;" placeholder="<?php esc_attr_e( 'Paste your form embed code here...', 'wprobo-engage-lite' ); ?>"><?php echo esc_textarea( $embed_code ); ?></textarea>
+										<textarea name="wpre_engage_embed_code" id="wpr-embed-code" rows="10" style="width: 100%; padding: 16px; border: 1px solid #e2e8f0; border-radius: 12px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 13px; color: #334155; background: #f8fafc; line-height: 1.6;" placeholder="<?php esc_attr_e( 'Paste your form embed code here...', 'wprobo-engage-lite' ); ?>"><?php echo esc_textarea( $embed_code ); ?></textarea>
 										<p style="margin-top: 10px; font-size: 12px; color: #64748b; line-height: 1.5;">
 											<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: inline-block; vertical-align: middle; margin-right: 4px;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
 											<?php esc_html_e( 'Paste the complete HTML and JavaScript code from your email service provider.', 'wprobo-engage-lite' ); ?>
@@ -803,21 +813,21 @@ class Meta_Box {
 									</div>
 
 									<!-- Conditional Value Container -->
-									<div id="wpr-trigger-value-container" style="<?php echo ( empty( $trigger_type ) || 'exit_intent' === $trigger_type ) ? 'display: none;' : ''; ?>">
+									<div id="wpr-trigger-value-container" style="<?php echo esc_attr( ( empty( $trigger_type ) || 'exit_intent' === $trigger_type ) ? 'display: none;' : '' ); ?>">
 										
 										<!-- Timed Delay Field -->
-										<div id="wpr-timed-delay-field" style="<?php echo 'timed_delay' === $trigger_type ? '' : 'display: none;'; ?>">
+										<div id="wpr-timed-delay-field" style="<?php echo esc_attr( 'timed_delay' === $trigger_type ? '' : 'display: none;' ); ?>">
 											<label for="wpr-trigger-value-delay" class="wpr-block wpr-text-sm wpr-font-bold wpr-text-slate-700 wpr-mb-2"><?php esc_html_e( 'Delay (seconds)', 'wprobo-engage-lite' ); ?></label>
-											<input type="number" id="wpr-trigger-value-delay" min="0" step="1" value="<?php echo 'timed_delay' === $trigger_type ? esc_attr( $trigger_value ) : '5'; ?>" class="wpr-mt-1 wpr-block wpr-w-full wpr-border wpr-border-slate-200 wpr-rounded-lg wpr-p-3" style="width: 100%; height: 44px; outline: none; border-color: #cbd5e1;">
+											<input type="number" id="wpr-trigger-value-delay" min="0" step="1" value="<?php echo esc_attr( 'timed_delay' === $trigger_type ? esc_attr( $trigger_value ) : '5' ); ?>" class="wpr-mt-1 wpr-block wpr-w-full wpr-border wpr-border-slate-200 wpr-rounded-lg wpr-p-3" style="width: 100%; height: 44px; outline: none; border-color: #cbd5e1;">
 											<p class="wpr-text-xs wpr-text-slate-500 wpr-mt-2" style="line-height: 1.5;">
 												<?php esc_html_e( 'Number of seconds to wait before showing the popup.', 'wprobo-engage-lite' ); ?>
 											</p>
 										</div>
 
 										<!-- Scroll Depth Field -->
-										<div id="wpr-scroll-depth-field" style="<?php echo 'scroll_depth' === $trigger_type ? '' : 'display: none;'; ?>">
+										<div id="wpr-scroll-depth-field" style="<?php echo esc_attr( 'scroll_depth' === $trigger_type ? '' : 'display: none;' ); ?>">
 											<label for="wpr-trigger-value-scroll" class="wpr-block wpr-text-sm wpr-font-bold wpr-text-slate-700 wpr-mb-2"><?php esc_html_e( 'Scroll Percentage (%)', 'wprobo-engage-lite' ); ?></label>
-											<input type="number" id="wpr-trigger-value-scroll" min="0" max="100" step="1" value="<?php echo 'scroll_depth' === $trigger_type ? esc_attr( $trigger_value ) : '50'; ?>" class="wpr-mt-1 wpr-block wpr-w-full wpr-border wpr-border-slate-200 wpr-rounded-lg wpr-p-3" style="width: 100%; height: 44px; outline: none; border-color: #cbd5e1;">
+											<input type="number" id="wpr-trigger-value-scroll" min="0" max="100" step="1" value="<?php echo esc_attr( 'scroll_depth' === $trigger_type ? esc_attr( $trigger_value ) : '50' ); ?>" class="wpr-mt-1 wpr-block wpr-w-full wpr-border wpr-border-slate-200 wpr-rounded-lg wpr-p-3" style="width: 100%; height: 44px; outline: none; border-color: #cbd5e1;">
 											<p class="wpr-text-xs wpr-text-slate-500 wpr-mt-2" style="line-height: 1.5;">
 												<?php esc_html_e( 'Percentage of page scrolled before showing the popup.', 'wprobo-engage-lite' ); ?>
 											</p>
@@ -865,7 +875,7 @@ class Meta_Box {
 							<!-- Advanced Mode Toggle -->
 							<div style="background: #ffffff; padding: 24px; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);">
 								<label style="display: flex; align-items: flex-start; gap: 14px; cursor: pointer;">
-									<input type="checkbox" id="wpr-use-rule-groups" value="1" style="width: 20px; height: 20px; margin-top: 2px;" <?php checked( get_post_meta( $post->ID, '_wpr_engage_use_rule_groups', true ), '1' ); ?> />
+									<input type="checkbox" id="wpr-use-rule-groups" value="1" style="width: 20px; height: 20px; margin-top: 2px;" <?php checked( get_post_meta( $post->ID, '_wpre_engage_use_rule_groups', true ), '1' ); ?> />
 									<div>
 										<span class="wpr-text-sm wpr-font-bold wpr-text-slate-800">
 											<?php esc_html_e( 'Advanced Logic (AND/OR)', 'wprobo-engage-lite' ); ?>
@@ -1017,7 +1027,7 @@ class Meta_Box {
 							</div>
 
 							<!-- Settings for "Show Message" -->
-							<div id="wpr-success-message-config" class="wpr-space-y-6" style="<?php echo ( 'message' !== $success_action ) ? 'display: none;' : ''; ?>">
+							<div id="wpr-success-message-config" class="wpr-space-y-6" style="<?php echo esc_attr( ( 'message' !== $success_action ) ? 'display: none;' : '' ); ?>">
 								
 								<!-- Card: Message Content & Icons -->
 								<div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 24px; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);">
@@ -1046,7 +1056,7 @@ class Meta_Box {
 												<span style="font-size: 13px; font-weight: 600; color: #475569;"><?php esc_html_e( 'Show visual success indicator (Icon)', 'wprobo-engage-lite' ); ?></span>
 											</label>
 
-											<div id="wpr-success-icon-options" class="wpr-grid wpr-grid-cols-2 wpr-gap-4" style="display: <?php echo ( '1' !== $success_show_icon ) ? 'none' : 'grid'; ?>; grid-template-columns: 1fr 1fr; gap: 16px; margin-left: 28px;">
+											<div id="wpr-success-icon-options" class="wpr-grid wpr-grid-cols-2 wpr-gap-4" style="display: <?php echo esc_attr( ( '1' !== $success_show_icon ) ? 'none' : 'grid' ); ?>; grid-template-columns: 1fr 1fr; gap: 16px; margin-left: 28px;">
 												<div>
 													<label for="wpr-success-icon-type" class="wpr-block wpr-text-xs wpr-font-bold wpr-text-slate-500 wpr-mb-2" style="display: block;"><?php esc_html_e( 'Icon Style', 'wprobo-engage-lite' ); ?></label>
 													<select id="wpr-success-icon-type" style="height: 38px; border-radius: 6px; border: 1px solid #cbd5e1; width: 100%; color: #334155;">
@@ -1164,7 +1174,7 @@ class Meta_Box {
 							</div>
 
 							<!-- Settings for "Redirect to URL" -->
-							<div id="wpr-redirect-url-container" class="wpr-space-y-6" style="<?php echo ( 'redirect' !== $success_action ) ? 'display: none;' : ''; ?>">
+							<div id="wpr-redirect-url-container" class="wpr-space-y-6" style="<?php echo esc_attr( ( 'redirect' !== $success_action ) ? 'display: none;' : '' ); ?>">
 								
 								<!-- Card: Redirect Rules -->
 								<div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 24px; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);">
@@ -1220,7 +1230,7 @@ class Meta_Box {
 										</div>
 									</label>
 
-									<div id="wpr-auto-close-delay-container" style="display: <?php echo ( '1' !== $success_auto_close ) ? 'none' : 'block'; ?>; margin-left: 30px; padding-left: 16px; border-left: 2px solid #e2e8f0;">
+									<div id="wpr-auto-close-delay-container" style="display: <?php echo esc_attr( ( '1' !== $success_auto_close ) ? 'none' : 'block' ); ?>; margin-left: 30px; padding-left: 16px; border-left: 2px solid #e2e8f0;">
 										<label for="wpr-success-auto-close-delay" class="wpr-block wpr-text-xs wpr-font-bold wpr-text-slate-500 wpr-mb-2" style="display: block; text-transform: uppercase;"><?php esc_html_e( 'Auto-Close Delay', 'wprobo-engage-lite' ); ?></label>
 										<div style="display: flex; align-items: center; gap: 12px;">
 											<input type="number" id="wpr-success-auto-close-delay" value="<?php echo esc_attr( $success_auto_close_delay ); ?>" min="1" max="60" style="width: 80px; height: 38px; border-radius: 6px; border: 1px solid #cbd5e1; padding: 0 10px;">
@@ -1300,7 +1310,7 @@ class Meta_Box {
 								<?php echo esc_html( $success_message_headline ?: 'Thank you!' ); ?>
 							</h2>
 							<p id="wpr-preview-success-content" style="font-size: <?php echo esc_attr( $success_content_font_size ?: '16' ); ?>px; font-weight: <?php echo esc_attr( $success_content_font_weight ?: 'normal' ); ?>; color: <?php echo esc_attr( $success_content_color ?: '#4B5563' ); ?>;"><?php echo esc_html( $success_message_content ?: 'Your subscription has been confirmed.' ); ?></p>
-							<div id="wpr-preview-discount-wrapper" style="margin-top: 20px; padding: 16px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 8px; <?php echo empty( $discount_code ) ? 'display: none;' : ''; ?>">
+							<div id="wpr-preview-discount-wrapper" style="margin-top: 20px; padding: 16px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 8px; <?php echo esc_attr( empty( $discount_code ) ? 'display: none;' : '' ); ?>">
 								<div id="wpr-preview-discount-label" style="color: #ffffff; font-size: 12px; margin-bottom: 8px;"><?php echo esc_html( $discount_code_label ?: 'Use discount code:' ); ?></div>
 								<div id="wpr-preview-discount-code" style="background: #ffffff; border-radius: 6px; padding: 10px; font-size: 1.25rem; font-weight: 700; color: #7c3aed;"><?php echo esc_html( $discount_code ); ?></div>
 							</div>
@@ -1398,18 +1408,18 @@ class Meta_Box {
 			return;
 		}
 
-		// 4. Make sure we are saving for our 'wpr_campaign' post type.
-		if ( ! isset( $_POST['post_type'] ) || 'wpr_campaign' !== $_POST['post_type'] ) {
+		// 4. Make sure we are saving for our 'wpre_campaign' post type.
+		if ( ! isset( $_POST['post_type'] ) || 'wpre_campaign' !== $_POST['post_type'] ) {
 			return;
 		}
 
 		// 5. Sanitize and save the data.
 		$fields = array(
-			'wpr_engage_campaign_type'  => '_wpr_engage_campaign_type',
-			'wpr_engage_bar_position'   => '_wpr_engage_bar_position',
-			'wpr_engage_slide_position' => '_wpr_engage_slide_position',
-			'wpr_engage_form_type'      => '_wpr_engage_form_type',
-			'wpr_engage_embed_provider' => '_wpr_engage_embed_provider',
+			'wpre_engage_campaign_type'  => '_wpre_engage_campaign_type',
+			'wpre_engage_bar_position'   => '_wpre_engage_bar_position',
+			'wpre_engage_slide_position' => '_wpre_engage_slide_position',
+			'wpre_engage_form_type'      => '_wpre_engage_form_type',
+			'wpre_engage_embed_provider' => '_wpre_engage_embed_provider',
 		);
 
 		foreach ( $fields as $key => $meta_key ) {
@@ -1419,15 +1429,15 @@ class Meta_Box {
 		}
 
 		// Save campaign status.
-		if ( array_key_exists( 'wpr_engage_campaign_status', $_POST ) ) {
-			$requested_status = sanitize_text_field( wp_unslash( $_POST['wpr_engage_campaign_status'] ) );
-			update_post_meta( $post_id, '_wpr_engage_campaign_status', $requested_status );
+		if ( array_key_exists( 'wpre_engage_campaign_status', $_POST ) ) {
+			$requested_status = sanitize_text_field( wp_unslash( $_POST['wpre_engage_campaign_status'] ) );
+			update_post_meta( $post_id, '_wpre_engage_campaign_status', $requested_status );
 		}
 
 		// Save form fields array — sanitize each sub-field individually so the
 		// sniffer can verify coverage without a broad phpcs:ignore suppression.
-		if ( isset( $_POST['wpr_engage_form_fields'] ) && is_array( $_POST['wpr_engage_form_fields'] ) ) {
-			$raw_fields  = (array) wp_unslash( $_POST['wpr_engage_form_fields'] ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- each sub-field is sanitized individually in the loop below.
+		if ( isset( $_POST['wpre_engage_form_fields'] ) && is_array( $_POST['wpre_engage_form_fields'] ) ) {
+			$raw_fields  = (array) wp_unslash( $_POST['wpre_engage_form_fields'] ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- each sub-field is sanitized individually in the loop below.
 			$form_fields = array();
 			foreach ( $raw_fields as $field ) {
 				if ( ! is_array( $field ) ) {
@@ -1440,11 +1450,11 @@ class Meta_Box {
 					'required'    => ! empty( $field['required'] ),
 				);
 			}
-			update_post_meta( $post_id, '_wpr_engage_form_fields', $form_fields );
+			update_post_meta( $post_id, '_wpre_engage_form_fields', $form_fields );
 		}
 
 		// Save embed code with wp_kses to allow safe HTML/JS.
-		if ( isset( $_POST['wpr_engage_embed_code'] ) ) {
+		if ( isset( $_POST['wpre_engage_embed_code'] ) ) {
 			$allowed_html = array(
 				'form'     => array(
 					'action' => true,
@@ -1492,10 +1502,8 @@ class Meta_Box {
 				),
 				'noscript' => array(),
 			);
-			$embed_code   = wp_kses( wp_unslash( $_POST['wpr_engage_embed_code'] ), $allowed_html );
-			update_post_meta( $post_id, '_wpr_engage_embed_code', $embed_code );
+			$embed_code   = wp_kses( wp_unslash( $_POST['wpre_engage_embed_code'] ), $allowed_html );
+			update_post_meta( $post_id, '_wpre_engage_embed_code', $embed_code );
 		}
-
 	}
-
 }

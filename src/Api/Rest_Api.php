@@ -155,7 +155,7 @@ class Rest_Api {
 				$sanitization_function = $savable_fields[ $key ];
 				// Convert camelCase to snake_case for meta key
 				$snake_key = strtolower( preg_replace( '/([a-z])([A-Z])/', '$1_$2', $key ) );
-				$meta_key  = '_wpr_engage_design_' . $snake_key;
+				$meta_key  = '_wpre_engage_design_' . $snake_key;
 				update_post_meta( $campaign_id, $meta_key, call_user_func( $sanitization_function, $value ) );
 			}
 		}
@@ -180,7 +180,7 @@ class Rest_Api {
 				$sanitization_function = $style_fields[ $key ];
 				// Convert camelCase to snake_case for meta key
 				$snake_key = strtolower( preg_replace( '/([a-z])([A-Z])/', '$1_$2', $key ) );
-				$meta_key  = '_wpr_engage_style_' . $snake_key;
+				$meta_key  = '_wpre_engage_style_' . $snake_key;
 				update_post_meta( $campaign_id, $meta_key, call_user_func( $sanitization_function, $value ) );
 			}
 		}
@@ -200,7 +200,7 @@ class Rest_Api {
 				$sanitization_function = $numeric_fields[ $key ];
 				// Convert camelCase to snake_case for meta key
 				$snake_key = strtolower( preg_replace( '/([a-z])([A-Z])/', '$1_$2', $key ) );
-				$meta_key  = '_wpr_engage_style_' . $snake_key;
+				$meta_key  = '_wpre_engage_style_' . $snake_key;
 				update_post_meta( $campaign_id, $meta_key, call_user_func( $sanitization_function, $value ) );
 			}
 		}
@@ -219,45 +219,45 @@ class Rest_Api {
 				$sanitization_function = $text_fields[ $key ];
 				// Convert camelCase to snake_case for meta key
 				$snake_key = strtolower( preg_replace( '/([a-z])([A-Z])/', '$1_$2', $key ) );
-				$meta_key  = '_wpr_engage_style_' . $snake_key;
+				$meta_key  = '_wpre_engage_style_' . $snake_key;
 				update_post_meta( $campaign_id, $meta_key, call_user_func( $sanitization_function, $value ) );
 			}
 		}
 
 		// --- Handle Boolean/Checkbox Fields ---
 		if ( isset( $params['boxShadowEnabled'] ) ) {
-			update_post_meta( $campaign_id, '_wpr_engage_style_box_shadow_enabled', $params['boxShadowEnabled'] === '1' ? '1' : '0' );
+			update_post_meta( $campaign_id, '_wpre_engage_style_box_shadow_enabled', $params['boxShadowEnabled'] === '1' ? '1' : '0' );
 		}
 
 		if ( isset( $params['escToClose'] ) ) {
-			update_post_meta( $campaign_id, '_wpr_engage_esc_to_close', $params['escToClose'] === '1' ? '1' : '0' );
+			update_post_meta( $campaign_id, '_wpre_engage_esc_to_close', $params['escToClose'] === '1' ? '1' : '0' );
 		}
 
 		if ( isset( $params['showCloseIcon'] ) ) {
-			update_post_meta( $campaign_id, '_wpr_engage_show_close_icon', $params['showCloseIcon'] === '1' ? '1' : '0' );
+			update_post_meta( $campaign_id, '_wpre_engage_show_close_icon', $params['showCloseIcon'] === '1' ? '1' : '0' );
 		}
 
 		// --- Handle Display Rules ---
 		if ( isset( $params['displayRules'] ) ) {
 			$display_rules = $this->sanitize_display_rules( $params['displayRules'] );
-			update_post_meta( $campaign_id, '_wpr_engage_display_rules', $display_rules );
+			update_post_meta( $campaign_id, '_wpre_engage_display_rules', $display_rules );
 		}
 
 		// --- Handle Rule Groups (Advanced Mode) ---
 		if ( isset( $params['ruleGroups'] ) ) {
 			$rule_groups = $this->sanitize_rule_groups( $params['ruleGroups'] );
-			update_post_meta( $campaign_id, '_wpr_engage_rule_groups', $rule_groups );
+			update_post_meta( $campaign_id, '_wpre_engage_rule_groups', $rule_groups );
 		}
 
 		// --- Handle Trigger Settings ---
 		if ( isset( $params['triggerType'] ) ) {
 			$trigger_type = sanitize_text_field( $params['triggerType'] );
-			update_post_meta( $campaign_id, '_wpr_engage_trigger_type', $trigger_type );
+			update_post_meta( $campaign_id, '_wpre_engage_trigger_type', $trigger_type );
 		}
 
 		if ( isset( $params['triggerValue'] ) ) {
 			$trigger_value = sanitize_text_field( $params['triggerValue'] );
-			update_post_meta( $campaign_id, '_wpr_engage_trigger_value', $trigger_value );
+			update_post_meta( $campaign_id, '_wpre_engage_trigger_value', $trigger_value );
 		}
 
 		// --- Handle Success Action Settings ---
@@ -265,94 +265,94 @@ class Rest_Api {
 			$success_action = sanitize_text_field( $params['successAction'] );
 			// Only allow 'message' or 'redirect'
 			if ( in_array( $success_action, array( 'message', 'redirect' ), true ) ) {
-				update_post_meta( $campaign_id, '_wpr_engage_success_action', $success_action );
+				update_post_meta( $campaign_id, '_wpre_engage_success_action', $success_action );
 			}
 		}
 
 		if ( isset( $params['successRedirectUrl'] ) ) {
 			$success_redirect_url = esc_url_raw( $params['successRedirectUrl'] );
-			update_post_meta( $campaign_id, '_wpr_engage_success_redirect_url', $success_redirect_url );
+			update_post_meta( $campaign_id, '_wpre_engage_success_redirect_url', $success_redirect_url );
 		}
 
 		// --- Handle Success Message Settings ---
 		if ( isset( $params['successMessageHeadline'] ) ) {
 			$success_message_headline = sanitize_text_field( $params['successMessageHeadline'] );
-			update_post_meta( $campaign_id, '_wpr_engage_success_message_headline', $success_message_headline );
+			update_post_meta( $campaign_id, '_wpre_engage_success_message_headline', $success_message_headline );
 		}
 
 		if ( isset( $params['successMessageContent'] ) ) {
 			$success_message_content = wp_kses_post( $params['successMessageContent'] );
-			update_post_meta( $campaign_id, '_wpr_engage_success_message_content', $success_message_content );
+			update_post_meta( $campaign_id, '_wpre_engage_success_message_content', $success_message_content );
 		}
 
 		if ( isset( $params['successAutoClose'] ) ) {
 			$success_auto_close = sanitize_text_field( $params['successAutoClose'] );
-			update_post_meta( $campaign_id, '_wpr_engage_success_auto_close', $success_auto_close );
+			update_post_meta( $campaign_id, '_wpre_engage_success_auto_close', $success_auto_close );
 		}
 
 		if ( isset( $params['successAutoCloseDelay'] ) ) {
 			$success_auto_close_delay = absint( $params['successAutoCloseDelay'] );
-			update_post_meta( $campaign_id, '_wpr_engage_success_auto_close_delay', $success_auto_close_delay );
+			update_post_meta( $campaign_id, '_wpre_engage_success_auto_close_delay', $success_auto_close_delay );
 		}
 
 		// --- Handle Redirect Settings ---
 		if ( isset( $params['successRedirectDelay'] ) ) {
 			$success_redirect_delay = absint( $params['successRedirectDelay'] );
-			update_post_meta( $campaign_id, '_wpr_engage_success_redirect_delay', $success_redirect_delay );
+			update_post_meta( $campaign_id, '_wpre_engage_success_redirect_delay', $success_redirect_delay );
 		}
 
 		if ( isset( $params['successRedirectNewTab'] ) ) {
 			$success_redirect_new_tab = sanitize_text_field( $params['successRedirectNewTab'] );
-			update_post_meta( $campaign_id, '_wpr_engage_success_redirect_new_tab', $success_redirect_new_tab );
+			update_post_meta( $campaign_id, '_wpre_engage_success_redirect_new_tab', $success_redirect_new_tab );
 		}
 
 		// --- Handle Success Icon Settings ---
 		if ( isset( $params['successShowIcon'] ) ) {
-			update_post_meta( $campaign_id, '_wpr_engage_success_show_icon', $params['successShowIcon'] === '1' ? '1' : '0' );
+			update_post_meta( $campaign_id, '_wpre_engage_success_show_icon', $params['successShowIcon'] === '1' ? '1' : '0' );
 		} else {
 			// If not set, save as '0' to explicitly uncheck
-			update_post_meta( $campaign_id, '_wpr_engage_success_show_icon', '0' );
+			update_post_meta( $campaign_id, '_wpre_engage_success_show_icon', '0' );
 		}
 
 		if ( isset( $params['successIconType'] ) ) {
 			$success_icon_type = sanitize_text_field( $params['successIconType'] );
-			update_post_meta( $campaign_id, '_wpr_engage_success_icon_type', $success_icon_type );
+			update_post_meta( $campaign_id, '_wpre_engage_success_icon_type', $success_icon_type );
 		}
 
 		if ( isset( $params['successIconColor'] ) ) {
 			$success_icon_color = sanitize_hex_color( $params['successIconColor'] );
-			update_post_meta( $campaign_id, '_wpr_engage_success_icon_color', $success_icon_color );
+			update_post_meta( $campaign_id, '_wpre_engage_success_icon_color', $success_icon_color );
 		}
 
 		// --- Handle Success Message Styling ---
 		if ( isset( $params['successTitleColor'] ) ) {
 			$success_title_color = sanitize_hex_color( $params['successTitleColor'] );
-			update_post_meta( $campaign_id, '_wpr_engage_success_title_color', $success_title_color );
+			update_post_meta( $campaign_id, '_wpre_engage_success_title_color', $success_title_color );
 		}
 
 		if ( isset( $params['successContentColor'] ) ) {
 			$success_content_color = sanitize_hex_color( $params['successContentColor'] );
-			update_post_meta( $campaign_id, '_wpr_engage_success_content_color', $success_content_color );
+			update_post_meta( $campaign_id, '_wpre_engage_success_content_color', $success_content_color );
 		}
 
 		if ( isset( $params['successTitleFontSize'] ) ) {
 			$success_title_font_size = absint( $params['successTitleFontSize'] );
-			update_post_meta( $campaign_id, '_wpr_engage_success_title_font_size', $success_title_font_size );
+			update_post_meta( $campaign_id, '_wpre_engage_success_title_font_size', $success_title_font_size );
 		}
 
 		if ( isset( $params['successContentFontSize'] ) ) {
 			$success_content_font_size = absint( $params['successContentFontSize'] );
-			update_post_meta( $campaign_id, '_wpr_engage_success_content_font_size', $success_content_font_size );
+			update_post_meta( $campaign_id, '_wpre_engage_success_content_font_size', $success_content_font_size );
 		}
 
 		if ( isset( $params['successTitleFontWeight'] ) ) {
 			$success_title_font_weight = sanitize_text_field( $params['successTitleFontWeight'] );
-			update_post_meta( $campaign_id, '_wpr_engage_success_title_font_weight', $success_title_font_weight );
+			update_post_meta( $campaign_id, '_wpre_engage_success_title_font_weight', $success_title_font_weight );
 		}
 
 		if ( isset( $params['successContentFontWeight'] ) ) {
 			$success_content_font_weight = sanitize_text_field( $params['successContentFontWeight'] );
-			update_post_meta( $campaign_id, '_wpr_engage_success_content_font_weight', $success_content_font_weight );
+			update_post_meta( $campaign_id, '_wpre_engage_success_content_font_weight', $success_content_font_weight );
 		}
 
 		/**
@@ -649,7 +649,7 @@ class Rest_Api {
 		$formatted_types = array();
 		foreach ( $post_types as $post_type ) {
 			// Skip our own campaign post type
-			if ( 'wpr_campaign' === $post_type->name ) {
+			if ( 'wpre_campaign' === $post_type->name ) {
 				continue;
 			}
 

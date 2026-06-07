@@ -31,7 +31,7 @@ class Activator {
 		 * Bump this value whenever a DB schema change is made so that existing
 		 * installs (upgraded via dbDelta) are also correctly identified.
 		 */
-		update_option( 'wpr_engage_schema_version', '1.1', false );
+		update_option( 'wpre_engage_schema_version', '1.1', false );
 
 		// Flush rewrite rules for the CPT.
 		flush_rewrite_rules();

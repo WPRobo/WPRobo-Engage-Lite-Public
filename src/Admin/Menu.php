@@ -20,7 +20,7 @@ class Menu {
 	 * @return string The capability required to access the plugin.
 	 */
 	private function get_required_capability(): string {
-		$allowed_roles = get_option( 'wpr_allowed_roles', array( 'administrator' ) );
+		$allowed_roles = get_option( 'wpre_allowed_roles', array( 'administrator' ) );
 		if ( ! is_array( $allowed_roles ) ) {
 			$allowed_roles = array( 'administrator' );
 		}
@@ -47,7 +47,7 @@ class Menu {
 	 * @return bool True if user can access, false otherwise.
 	 */
 	public function current_user_can_access(): bool {
-		$allowed_roles = get_option( 'wpr_allowed_roles', array( 'administrator' ) );
+		$allowed_roles = get_option( 'wpre_allowed_roles', array( 'administrator' ) );
 		if ( ! is_array( $allowed_roles ) ) {
 			$allowed_roles = array( 'administrator' );
 		}
@@ -203,7 +203,7 @@ class Menu {
 		 *
 		 * @var array|false $cached_stats
 		 */
-		$cached_stats = get_transient( 'wpr_engage_dashboard_stats' );
+		$cached_stats = get_transient( 'wpre_engage_dashboard_stats' );
 
 		if ( false !== $cached_stats && is_array( $cached_stats ) ) {
 			$total_impressions    = $cached_stats['total_impressions'];
@@ -269,7 +269,7 @@ class Menu {
 			// Query campaigns with their stats
 			$campaigns = get_posts(
 				array(
-					'post_type'      => 'wpr_campaign',
+					'post_type'      => 'wpre_campaign',
 					'posts_per_page' => -1,
 					'post_status'    => 'any',
 				)
@@ -319,7 +319,7 @@ class Menu {
 
 			// Persist all computed values in the transient.
 			set_transient(
-				'wpr_engage_dashboard_stats',
+				'wpre_engage_dashboard_stats',
 				array(
 					'total_impressions'    => $total_impressions,
 					'total_conversions'    => $total_conversions,
@@ -570,18 +570,18 @@ class Menu {
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only display parameter, no state change.
 		$campaign_id = isset( $_GET['campaign_id'] ) ? absint( $_GET['campaign_id'] ) : 0;
 		// Fetch saved values
-		$headline                 = get_post_meta( $campaign_id, '_wpr_engage_design_headline', true );
-		$content                  = get_post_meta( $campaign_id, '_wpr_engage_design_content', true );
-		$button                   = get_post_meta( $campaign_id, '_wpr_engage_design_button', true );
-		$display_rules            = get_post_meta( $campaign_id, '_wpr_engage_display_rules', true );
-		$success_action           = get_post_meta( $campaign_id, '_wpr_engage_success_action', true );
-		$success_redirect_url     = get_post_meta( $campaign_id, '_wpr_engage_success_redirect_url', true );
-		$success_message_headline = get_post_meta( $campaign_id, '_wpr_engage_success_message_headline', true );
-		$success_message_content  = get_post_meta( $campaign_id, '_wpr_engage_success_message_content', true );
-		$success_auto_close       = get_post_meta( $campaign_id, '_wpr_engage_success_auto_close', true );
-		$success_auto_close_delay = get_post_meta( $campaign_id, '_wpr_engage_success_auto_close_delay', true );
-		$success_redirect_delay   = get_post_meta( $campaign_id, '_wpr_engage_success_redirect_delay', true );
-		$success_redirect_new_tab = get_post_meta( $campaign_id, '_wpr_engage_success_redirect_new_tab', true );
+		$headline                 = get_post_meta( $campaign_id, '_wpre_engage_design_headline', true );
+		$content                  = get_post_meta( $campaign_id, '_wpre_engage_design_content', true );
+		$button                   = get_post_meta( $campaign_id, '_wpre_engage_design_button', true );
+		$display_rules            = get_post_meta( $campaign_id, '_wpre_engage_display_rules', true );
+		$success_action           = get_post_meta( $campaign_id, '_wpre_engage_success_action', true );
+		$success_redirect_url     = get_post_meta( $campaign_id, '_wpre_engage_success_redirect_url', true );
+		$success_message_headline = get_post_meta( $campaign_id, '_wpre_engage_success_message_headline', true );
+		$success_message_content  = get_post_meta( $campaign_id, '_wpre_engage_success_message_content', true );
+		$success_auto_close       = get_post_meta( $campaign_id, '_wpre_engage_success_auto_close', true );
+		$success_auto_close_delay = get_post_meta( $campaign_id, '_wpre_engage_success_auto_close_delay', true );
+		$success_redirect_delay   = get_post_meta( $campaign_id, '_wpre_engage_success_redirect_delay', true );
+		$success_redirect_new_tab = get_post_meta( $campaign_id, '_wpre_engage_success_redirect_new_tab', true );
 
 		// Ensure display_rules is an array
 		if ( ! is_array( $display_rules ) ) {
@@ -632,10 +632,30 @@ class Menu {
 						</button>
 						<?php $pro_badge = ' ' . Pro_Upsell::render_badge(); ?>
 						<button class="wpr-tab-button wpr-flex-1 wpr-py-3 wpr-px-4 wpr-text-sm wpr-font-medium wpr-text-gray-500 wpr-border-b-2 wpr-border-transparent hover:wpr-text-gray-700 hover:wpr-border-gray-300" data-tab="embed">
-							<?php echo wp_kses( __( 'Embed', 'wprobo-engage-lite' ) . $pro_badge, array( 'span' => array( 'class' => array(), 'style' => array() ) ) ); ?>
+							<?php
+							echo wp_kses(
+								__( 'Embed', 'wprobo-engage-lite' ) . $pro_badge,
+								array(
+									'span' => array(
+										'class' => array(),
+										'style' => array(),
+									),
+								)
+							);
+							?>
 						</button>
 						<button class="wpr-tab-button wpr-flex-1 wpr-py-3 wpr-px-4 wpr-text-sm wpr-font-medium wpr-text-gray-500 wpr-border-b-2 wpr-border-transparent hover:wpr-text-gray-700 hover:wpr-border-gray-300" data-tab="history">
-							<?php echo wp_kses( __( 'History', 'wprobo-engage-lite' ) . $pro_badge, array( 'span' => array( 'class' => array(), 'style' => array() ) ) ); ?>
+							<?php
+							echo wp_kses(
+								__( 'History', 'wprobo-engage-lite' ) . $pro_badge,
+								array(
+									'span' => array(
+										'class' => array(),
+										'style' => array(),
+									),
+								)
+							);
+							?>
 						</button>
 					</div>
 
@@ -702,7 +722,7 @@ class Menu {
 								</label>
 
 								<!-- Success Message Configuration -->
-								<div id="wpr-success-message-config" class="wpr-pl-3 wpr-space-y-4 <?php echo ( 'message' !== $success_action ) ? 'wpr-hidden' : ''; ?>">
+								<div id="wpr-success-message-config" class="wpr-pl-3 wpr-space-y-4 <?php echo esc_attr( ( 'message' !== $success_action ) ? 'wpr-hidden' : '' ); ?>">
 									<div>
 										<label for="wpr-success-message-headline" class="wpr-block wpr-text-sm wpr-font-medium wpr-text-gray-700 wpr-mb-2">
 											<?php esc_html_e( 'Success Headline', 'wprobo-engage-lite' ); ?>
@@ -727,7 +747,7 @@ class Menu {
 										</label>
 									</div>
 
-									<div id="wpr-auto-close-delay-container" class="wpr-pl-6 <?php echo ( '1' !== $success_auto_close ) ? 'wpr-hidden' : ''; ?>">
+									<div id="wpr-auto-close-delay-container" class="wpr-pl-6 <?php echo esc_attr( ( '1' !== $success_auto_close ) ? 'wpr-hidden' : '' ); ?>">
 										<label for="wpr-success-auto-close-delay" class="wpr-block wpr-text-sm wpr-font-medium wpr-text-gray-700 wpr-mb-2">
 											<?php esc_html_e( 'Auto-close delay (seconds)', 'wprobo-engage-lite' ); ?>
 										</label>
@@ -747,7 +767,7 @@ class Menu {
 								</label>
 
 								<!-- Redirect Configuration -->
-								<div id="wpr-redirect-url-container" class="wpr-pl-3 wpr-space-y-4 <?php echo ( 'redirect' !== $success_action ) ? 'wpr-hidden' : ''; ?>">
+								<div id="wpr-redirect-url-container" class="wpr-pl-3 wpr-space-y-4 <?php echo esc_attr( ( 'redirect' !== $success_action ) ? 'wpr-hidden' : '' ); ?>">
 									<div>
 										<label for="wpr-success-redirect-url" class="wpr-block wpr-text-sm wpr-font-medium wpr-text-gray-700 wpr-mb-2">
 											<?php esc_html_e( 'Redirect URL', 'wprobo-engage-lite' ); ?>
@@ -819,7 +839,7 @@ class Menu {
 	 */
 	public function modify_campaign_row_actions( array $actions, \WP_Post $post ): array {
 		// We only want to modify this for our CPT
-		if ( 'wpr_campaign' === $post->post_type ) {
+		if ( 'wpre_campaign' === $post->post_type ) {
 
 			// Build the URL for export
 			$export_url = add_query_arg(
@@ -882,7 +902,7 @@ class Menu {
 
 		// Check if we're on the post-new.php page for our CPT
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only page redirect, no state change.
-		if ( 'post-new.php' === $pagenow && isset( $_GET['post_type'] ) && 'wpr_campaign' === $_GET['post_type'] ) {
+		if ( 'post-new.php' === $pagenow && isset( $_GET['post_type'] ) && 'wpre_campaign' === $_GET['post_type'] ) {
 			wp_safe_redirect( admin_url( 'admin.php?page=wprobo-engage-templates' ) );
 			exit;
 		}
@@ -907,7 +927,7 @@ class Menu {
 		// If a filter is set (search, campaign filter), keep the table visible
 		// so the user can see how to clear the filter.
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only filter parameters, no state change.
-		$has_search       = ! empty( $_GET['s'] );
+		$has_search = ! empty( $_GET['s'] );
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only filter parameter, no state change.
 		$has_campaign_flt = ! empty( $_GET['campaign_id'] );
 		$is_truly_empty   = empty( $leads_table->items ) && ! $has_search && ! $has_campaign_flt;
@@ -929,7 +949,7 @@ class Menu {
 			// Deleted-count notice is driven by the URL param set by the
 			// redirect-after-delete flow in Leads_List_Table::process_bulk_action().
 			// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only display parameter, no state change.
-			$deleted_count = isset( $_GET['wpr_deleted'] ) ? absint( $_GET['wpr_deleted'] ) : 0;
+			$deleted_count = isset( $_GET['wpre_deleted'] ) ? absint( $_GET['wpre_deleted'] ) : 0;
 			if ( $deleted_count > 0 ) :
 				?>
 				<div class="notice notice-success is-dismissible" style="margin-bottom: 16px;">
@@ -966,7 +986,7 @@ class Menu {
 						printf(
 							/* translators: %s: link to Campaigns screen */
 							esc_html__( 'Already have campaigns? %s to make sure they are active.', 'wprobo-engage-lite' ),
-							'<a href="' . esc_url( admin_url( 'edit.php?post_type=wpr_campaign' ) ) . '" style="color: #2563eb; font-weight: 500;">' . esc_html__( 'Review them here', 'wprobo-engage-lite' ) . '</a>'
+							'<a href="' . esc_url( admin_url( 'edit.php?post_type=wpre_campaign' ) ) . '" style="color: #2563eb; font-weight: 500;">' . esc_html__( 'Review them here', 'wprobo-engage-lite' ) . '</a>'
 						);
 						?>
 					</p>

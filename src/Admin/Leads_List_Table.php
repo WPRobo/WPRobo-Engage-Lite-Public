@@ -131,8 +131,8 @@ class Leads_List_Table extends \WP_List_Table {
 		// submission). Carry the count as a status param for the notice.
 		$redirect = add_query_arg(
 			array(
-				'page'        => 'wprobo-engage-leads',
-				'wpr_deleted' => $count,
+				'page'         => 'wprobo-engage-leads',
+				'wpre_deleted' => $count,
 			),
 			admin_url( 'admin.php' )
 		);
@@ -176,7 +176,7 @@ class Leads_List_Table extends \WP_List_Table {
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only sort parameter, no state change.
 		$orderby = isset( $_GET['orderby'] ) ? sanitize_text_field( wp_unslash( $_GET['orderby'] ) ) : 'id';
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only sort parameter, no state change.
-		$order   = isset( $_GET['order'] ) ? sanitize_text_field( wp_unslash( $_GET['order'] ) ) : 'DESC';
+		$order = isset( $_GET['order'] ) ? sanitize_text_field( wp_unslash( $_GET['order'] ) ) : 'DESC';
 
 		// Validate orderby
 		$allowed_orderby = array( 'id', 'email', 'submitted_at' );
@@ -268,7 +268,7 @@ class Leads_List_Table extends \WP_List_Table {
 		// Get all campaigns for filter dropdown
 		$campaigns = get_posts(
 			array(
-				'post_type'      => 'wpr_campaign',
+				'post_type'      => 'wpre_campaign',
 				'posts_per_page' => -1,
 				'post_status'    => 'any',
 				'orderby'        => 'title',
@@ -341,7 +341,7 @@ class Leads_List_Table extends \WP_List_Table {
 
 		// Get campaign form fields to map labels
 		$campaign_id = absint( $item['campaign_id'] );
-		$form_fields = get_post_meta( $campaign_id, '_wpr_engage_form_fields', true );
+		$form_fields = get_post_meta( $campaign_id, '_wpre_engage_form_fields', true );
 
 		$pills    = array();
 		$overflow = 0;
@@ -356,7 +356,7 @@ class Leads_List_Table extends \WP_List_Table {
 
 			// Resolve a human-readable label from the campaign's form config.
 			$label = $key;
-			if ( preg_match( '/^wpr_field_(\d+)$/', $key, $matches ) ) {
+			if ( preg_match( '/^wpre_field_(\d+)$/', $key, $matches ) ) {
 				$field_index = absint( $matches[1] );
 				if ( ! empty( $form_fields[ $field_index ]['label'] ) ) {
 					$label = $form_fields[ $field_index ]['label'];

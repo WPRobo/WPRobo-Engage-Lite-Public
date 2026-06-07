@@ -26,8 +26,8 @@ class Settings {
 		// then URL param, then default to 'general'.
 		// phpcs:disable WordPress.Security.NonceVerification.Missing, WordPress.Security.NonceVerification.Recommended -- read-only tab selection; nonce verified in handle_form_submission() for actual saves.
 		$current_tab = 'general';
-		if ( isset( $_POST['wpr_active_tab'] ) ) {
-			$current_tab = sanitize_key( wp_unslash( $_POST['wpr_active_tab'] ) );
+		if ( isset( $_POST['wpre_active_tab'] ) ) {
+			$current_tab = sanitize_key( wp_unslash( $_POST['wpre_active_tab'] ) );
 		} elseif ( isset( $_GET['tab'] ) ) {
 			$current_tab = sanitize_key( wp_unslash( $_GET['tab'] ) );
 		}
@@ -47,8 +47,8 @@ class Settings {
 			<h1 class="wpr-text-2xl wpr-font-semibold wpr-text-gray-800 wpr-mb-6"><?php esc_html_e( 'Settings', 'wprobo-engage-lite' ); ?></h1>
 
 			<?php
-			settings_errors( 'wpr_general_settings' );
-			settings_errors( 'wpr_advanced_settings' );
+			settings_errors( 'wpre_general_settings' );
+			settings_errors( 'wpre_advanced_settings' );
 			?>
 
 			<!-- Tab Navigation (client-side switching, no page reload) -->
@@ -58,7 +58,17 @@ class Settings {
 						class="wpr-settings-tab"
 						data-tab="<?php echo esc_attr( $tab_key ); ?>"
 						style="padding: 10px 20px; font-size: 14px; font-weight: 500; background: none; border: none; border-bottom: 2px solid transparent; margin-bottom: -1px; cursor: pointer; color: #6b7280; transition: color 0.2s, border-color 0.2s;">
-						<?php echo wp_kses( $tab_label, array( 'span' => array( 'class' => array(), 'style' => array() ) ) ); ?>
+						<?php
+						echo wp_kses(
+							$tab_label,
+							array(
+								'span' => array(
+									'class' => array(),
+									'style' => array(),
+								),
+							)
+						);
+						?>
 					</button>
 				<?php endforeach; ?>
 			</div>
@@ -92,7 +102,7 @@ class Settings {
 			switchTab(currentTab);
 			tabs.forEach(function(tab) { tab.addEventListener('click', function() { var target = this.getAttribute('data-tab'); if (target !== currentTab) { switchTab(target); } }); });
 			document.querySelectorAll('.wpr-settings-panel input, .wpr-settings-panel select, .wpr-settings-panel textarea').forEach(function(el) { el.addEventListener('change', function() { modified = true; }); el.addEventListener('input', function() { modified = true; }); });
-			document.querySelectorAll('.wpr-settings-panel form').forEach(function(form) { form.addEventListener('submit', function() { modified = false; var input = document.createElement('input'); input.type = 'hidden'; input.name = 'wpr_active_tab'; input.value = currentTab; form.appendChild(input); }); });
+			document.querySelectorAll('.wpr-settings-panel form').forEach(function(form) { form.addEventListener('submit', function() { modified = false; var input = document.createElement('input'); input.type = 'hidden'; input.name = 'wpre_active_tab'; input.value = currentTab; form.appendChild(input); }); });
 			window.addEventListener('beforeunload', function(e) { if (modified) { e.preventDefault(); e.returnValue = ''; } });
 		})();";
 		wp_print_inline_script_tag( $settings_js );
@@ -105,14 +115,14 @@ class Settings {
 	 */
 	private function handle_form_submission(): void {
 		// General tab submission
-		if ( isset( $_POST['wpr_general_settings_nonce'] ) &&
-			wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wpr_general_settings_nonce'] ) ), 'wpr_save_general_settings' ) ) {
+		if ( isset( $_POST['wpre_general_settings_nonce'] ) &&
+			wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wpre_general_settings_nonce'] ) ), 'wpre_save_general_settings' ) ) {
 			$this->save_general_settings();
 		}
 
 		// Advanced tab submission
-		if ( isset( $_POST['wpr_advanced_settings_nonce'] ) &&
-			wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wpr_advanced_settings_nonce'] ) ), 'wpr_save_advanced_settings' ) ) {
+		if ( isset( $_POST['wpre_advanced_settings_nonce'] ) &&
+			wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wpre_advanced_settings_nonce'] ) ), 'wpre_save_advanced_settings' ) ) {
 			$this->save_advanced_settings();
 		}
 	}
@@ -123,7 +133,7 @@ class Settings {
 	 * @return void
 	 */
 	private function render_general_tab(): void {
-		$allowed_roles = get_option( 'wpr_allowed_roles', array( 'administrator' ) );
+		$allowed_roles = get_option( 'wpre_allowed_roles', array( 'administrator' ) );
 		if ( ! is_array( $allowed_roles ) ) {
 			$allowed_roles = array( 'administrator' );
 		}
@@ -135,7 +145,7 @@ class Settings {
 			<h2 class="wpr-text-xl wpr-font-semibold wpr-mb-4"><?php esc_html_e( 'General Settings', 'wprobo-engage-lite' ); ?></h2>
 			
 			<form method="post" action="">
-				<?php wp_nonce_field( 'wpr_save_general_settings', 'wpr_general_settings_nonce' ); ?>
+				<?php wp_nonce_field( 'wpre_save_general_settings', 'wpre_general_settings_nonce' ); ?>
 				
 				<table class="form-table">
 					<tr>
@@ -150,7 +160,7 @@ class Settings {
 								<?php foreach ( $roles as $role_slug => $role_name ) : ?>
 									<label style="display: block; margin-bottom: 8px;">
 										<input type="checkbox" 
-												name="wpr_allowed_roles[]" 
+												name="wpre_allowed_roles[]" 
 												value="<?php echo esc_attr( $role_slug ); ?>"
 												<?php checked( in_array( $role_slug, $allowed_roles, true ) ); ?>>
 										<?php echo esc_html( $role_name ); ?>
@@ -183,13 +193,13 @@ class Settings {
 	 * @return void
 	 */
 	private function render_advanced_tab(): void {
-		$delete_on_uninstall = get_option( 'wpr_delete_on_uninstall', '0' );
+		$delete_on_uninstall = get_option( 'wpre_delete_on_uninstall', '0' );
 		?>
 		<div class="wpr-p-6 wpr-bg-white wpr-rounded-lg wpr-shadow-md wpr-mb-6" style="max-width: 800px;">
 			<h2 class="wpr-text-xl wpr-font-semibold wpr-mb-4"><?php esc_html_e( 'Data Cleanup', 'wprobo-engage-lite' ); ?></h2>
 
 			<form method="post" action="">
-				<?php wp_nonce_field( 'wpr_save_advanced_settings', 'wpr_advanced_settings_nonce' ); ?>
+				<?php wp_nonce_field( 'wpre_save_advanced_settings', 'wpre_advanced_settings_nonce' ); ?>
 
 				<table class="form-table">
 					<tr>
@@ -201,7 +211,7 @@ class Settings {
 								<label for="wpr-delete-on-uninstall">
 									<input type="checkbox"
 											id="wpr-delete-on-uninstall"
-											name="wpr_delete_on_uninstall"
+											name="wpre_delete_on_uninstall"
 											value="1"
 											<?php checked( $delete_on_uninstall, '1' ); ?>>
 									<?php esc_html_e( 'Delete all data on plugin uninstall', 'wprobo-engage-lite' ); ?>
@@ -236,8 +246,8 @@ class Settings {
 		}
 
 		// phpcs:disable WordPress.Security.NonceVerification.Missing -- nonce verified in handle_form_submission() before calling this method.
-		$allowed_roles = isset( $_POST['wpr_allowed_roles'] ) && is_array( $_POST['wpr_allowed_roles'] )
-			? array_map( 'sanitize_key', wp_unslash( $_POST['wpr_allowed_roles'] ) )
+		$allowed_roles = isset( $_POST['wpre_allowed_roles'] ) && is_array( $_POST['wpre_allowed_roles'] )
+			? array_map( 'sanitize_key', wp_unslash( $_POST['wpre_allowed_roles'] ) )
 			: array();
 		// phpcs:enable
 
@@ -246,10 +256,10 @@ class Settings {
 			$allowed_roles[] = 'administrator';
 		}
 
-		update_option( 'wpr_allowed_roles', $allowed_roles );
+		update_option( 'wpre_allowed_roles', $allowed_roles );
 
 		add_settings_error(
-			'wpr_general_settings',
+			'wpre_general_settings',
 			'settings_saved',
 			esc_html__( 'General settings saved successfully!', 'wprobo-engage-lite' ),
 			'updated'
@@ -267,16 +277,15 @@ class Settings {
 		}
 
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- nonce verified in handle_form_submission() before calling this method.
-		$delete_on_uninstall = isset( $_POST['wpr_delete_on_uninstall'] ) ? '1' : '0';
+		$delete_on_uninstall = isset( $_POST['wpre_delete_on_uninstall'] ) ? '1' : '0';
 
-		update_option( 'wpr_delete_on_uninstall', $delete_on_uninstall );
+		update_option( 'wpre_delete_on_uninstall', $delete_on_uninstall );
 
 		add_settings_error(
-			'wpr_advanced_settings',
+			'wpre_advanced_settings',
 			'settings_saved',
 			esc_html__( 'Advanced settings saved successfully!', 'wprobo-engage-lite' ),
 			'updated'
 		);
 	}
-
 }

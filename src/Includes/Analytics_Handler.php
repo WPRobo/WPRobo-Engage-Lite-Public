@@ -21,7 +21,7 @@ class Analytics_Handler {
 	 */
 	public function track_impression(): void {
 		// Verify nonce — the nonce is embedded in the page via wp_localize_script.
-		if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'wpr_engage_nonce' ) ) {
+		if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'wpre_engage_nonce' ) ) {
 			wp_send_json_error( array( 'message' => __( 'Security check failed.', 'wprobo-engage-lite' ) ) );
 			return;
 		}
@@ -36,7 +36,7 @@ class Analytics_Handler {
 		// Rate-limit impression tracking: 1 per IP per campaign per 10 seconds
 		// to prevent analytics inflation from bots or rapid reloads.
 		$ip       = $this->get_client_ip();
-		$rate_key = 'wpr_imp_' . md5( $ip . '_' . $campaign_id );
+		$rate_key = 'wpre_imp_' . md5( $ip . '_' . $campaign_id );
 		if ( get_transient( $rate_key ) ) {
 			// Silently succeed — don't expose rate-limit details to client.
 			wp_send_json_success( array( 'message' => 'ok' ) );
@@ -104,7 +104,7 @@ class Analytics_Handler {
 		if ( false !== $result ) {
 			// Invalidate the cached dashboard stats so the next page load reflects
 			// the newly recorded event without waiting for the transient to expire.
-			delete_transient( 'wpr_engage_dashboard_stats' );
+			delete_transient( 'wpre_engage_dashboard_stats' );
 
 			/**
 			 * Fires after an analytics event has been recorded.

@@ -20,7 +20,7 @@ class Lead_Handler {
 		 * per 30 s).
 		 */
 		if ( is_user_logged_in() ) {
-			if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'wpr_engage_nonce' ) ) {
+			if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'wpre_engage_nonce' ) ) {
 				wp_send_json_error( array( 'message' => __( 'Security check failed.', 'wprobo-engage-lite' ) ) );
 				return;
 			}
@@ -28,7 +28,7 @@ class Lead_Handler {
 			// Rate-limit public submissions: 1 per IP per campaign per 30 seconds.
 			$campaign_id_raw = isset( $_POST['campaign_id'] ) ? absint( $_POST['campaign_id'] ) : 0;
 			$ip              = $this->get_client_ip();
-			$rate_key        = 'wpr_rl_' . md5( $ip . '_' . $campaign_id_raw );
+			$rate_key        = 'wpre_rl_' . md5( $ip . '_' . $campaign_id_raw );
 
 			if ( get_transient( $rate_key ) ) {
 				wp_send_json_error( array( 'message' => __( 'Please wait before submitting again.', 'wprobo-engage-lite' ) ) );
@@ -57,13 +57,13 @@ class Lead_Handler {
 			// New multi-field submission — unslash the entire array first.
 			$raw_form_data = wp_unslash( $_POST['form_data'] ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- sanitized per-field below
 
-			$form_fields = get_post_meta( $campaign_id, '_wpr_engage_form_fields', true );
+			$form_fields = get_post_meta( $campaign_id, '_wpre_engage_form_fields', true );
 
 			foreach ( $raw_form_data as $key => $value ) {
 				$sanitized_key = sanitize_text_field( $key );
 
-				// Determine field type from key pattern (wpr_field_0, wpr_field_1, etc.).
-				if ( preg_match( '/^wpr_field_(\d+)$/', $key, $matches ) ) {
+				// Determine field type from key pattern (wpre_field_0, wpre_field_1, etc.).
+				if ( preg_match( '/^wpre_field_(\d+)$/', $key, $matches ) ) {
 					$field_index = $matches[1];
 
 					if ( ! empty( $form_fields[ $field_index ] ) ) {
@@ -125,7 +125,7 @@ class Lead_Handler {
 		// Set rate-limit transient now that input is validated (nopriv only).
 		if ( ! is_user_logged_in() ) {
 			$ip       = $this->get_client_ip();
-			$rate_key = 'wpr_rl_' . md5( $ip . '_' . $campaign_id );
+			$rate_key = 'wpre_rl_' . md5( $ip . '_' . $campaign_id );
 			set_transient( $rate_key, 1, 30 );
 		}
 
@@ -136,7 +136,7 @@ class Lead_Handler {
 		 * Use a stored schema-version flag (set at activation) instead of running
 		 * a SHOW COLUMNS query on every form submission.
 		 */
-		$schema_version = get_option( 'wpr_engage_schema_version', '1.0' );
+		$schema_version = get_option( 'wpre_engage_schema_version', '1.0' );
 		$has_form_data  = version_compare( $schema_version, '1.1', '>=' );
 
 		if ( $has_form_data ) {
@@ -259,5 +259,4 @@ class Lead_Handler {
 		// Fall back to REMOTE_ADDR (may be private/local).
 		return isset( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : '';
 	}
-
 }

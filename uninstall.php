@@ -16,7 +16,7 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 }
 
 // Check if user has enabled delete on uninstall option
-$delete_on_uninstall = get_option( 'wpr_delete_on_uninstall', '0' );
+$delete_on_uninstall = get_option( 'wpre_delete_on_uninstall', '0' );
 
 if ( '1' !== $delete_on_uninstall ) {
 	// User wants to keep the data
@@ -27,11 +27,11 @@ global $wpdb;
 
 // Delete all campaigns (custom post type)
 $campaigns = get_posts(
-	[
-		'post_type'      => 'wpr_campaign',
+	array(
+		'post_type'      => 'wpre_campaign',
 		'posts_per_page' => -1,
 		'post_status'    => 'any',
-	]
+	)
 );
 
 foreach ( $campaigns as $campaign ) {
@@ -39,8 +39,9 @@ foreach ( $campaigns as $campaign ) {
 }
 
 // Delete all options
-delete_option( 'wpr_allowed_roles' );
-delete_option( 'wpr_delete_on_uninstall' );
+delete_option( 'wpre_allowed_roles' );
+delete_option( 'wpre_delete_on_uninstall' );
+delete_option( 'wpre_engage_schema_version' );
 
 // Delete custom tables if they exist
 $analytics_table = $wpdb->prefix . 'wprobo_engage_analytics';
@@ -53,4 +54,4 @@ $wpdb->query( "DROP TABLE IF EXISTS {$leads_table}" );
 
 // Delete all post meta for campaigns
 // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter -- uninstall cleanup; bulk delete with no WP API equivalent.
-$wpdb->query( "DELETE FROM {$wpdb->postmeta} WHERE post_id IN (SELECT ID FROM {$wpdb->posts} WHERE post_type = 'wpr_campaign')" );
+$wpdb->query( "DELETE FROM {$wpdb->postmeta} WHERE post_id IN (SELECT ID FROM {$wpdb->posts} WHERE post_type = 'wpre_campaign')" );

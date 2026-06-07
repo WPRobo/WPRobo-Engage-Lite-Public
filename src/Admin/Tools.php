@@ -27,7 +27,7 @@ class Tools {
 		// Handle import messages from redirect
 		$import_message = '';
 		$import_status  = '';
-		
+
 		// phpcs:disable WordPress.Security.NonceVerification.Recommended -- display-only GET params; values originate from wp_safe_redirect() calls in nonce-verified handlers and are used only for rendering feedback messages, never for state changes.
 		if ( isset( $_GET['import_status'] ) ) {
 			$import_status = sanitize_text_field( wp_unslash( $_GET['import_status'] ) );
@@ -39,7 +39,7 @@ class Tools {
 					/* translators: %d: number of campaigns imported */
 					_n( 'Successfully imported %d campaign!', 'Successfully imported %d campaigns!', $count, 'wprobo-engage-lite' ),
 					$count
-				) . ' <a href="' . admin_url( 'edit.php?post_type=wpr_campaign' ) . '" class="wpr-underline wpr-font-semibold">' . esc_html__( 'View all campaigns', 'wprobo-engage-lite' ) . '</a>';
+				) . ' <a href="' . admin_url( 'edit.php?post_type=wpre_campaign' ) . '" class="wpr-underline wpr-font-semibold">' . esc_html__( 'View all campaigns', 'wprobo-engage-lite' ) . '</a>';
 			} else {
 				switch ( $import_code ) {
 					case 'upload_failed':
@@ -74,15 +74,16 @@ class Tools {
 			</div>
 
 			<?php if ( $import_message ) : ?>
-				<div class="wpr-mb-6 wpr-p-4 wpr-rounded-lg <?php echo $import_status === 'success' ? 'wpr-bg-green-50 wpr-border wpr-border-green-200' : 'wpr-bg-red-50 wpr-border wpr-border-red-200'; ?>">
-					<p class="<?php echo $import_status === 'success' ? 'wpr-text-green-700' : 'wpr-text-red-700'; ?>">
+				<div class="wpr-mb-6 wpr-p-4 wpr-rounded-lg <?php echo esc_attr( $import_status === 'success' ? 'wpr-bg-green-50 wpr-border wpr-border-green-200' : 'wpr-bg-red-50 wpr-border wpr-border-red-200' ); ?>">
+					<p class="<?php echo esc_attr( $import_status === 'success' ? 'wpr-text-green-700' : 'wpr-text-red-700' ); ?>">
 						<?php echo wp_kses_post( $import_message ); ?>
 					</p>
 				</div>
 			<?php endif; ?>
 
 			<?php // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only display parameter.
-			if ( isset( $_GET['wpr_export_error'] ) && 'no_campaigns' === $_GET['wpr_export_error'] ) : ?>
+			if ( isset( $_GET['wpre_export_error'] ) && 'no_campaigns' === $_GET['wpre_export_error'] ) :
+				?>
 				<div class="wpr-mb-6 wpr-p-4 wpr-rounded-lg wpr-bg-yellow-50 wpr-border wpr-border-yellow-200">
 					<p class="wpr-text-yellow-700">
 						<?php esc_html_e( 'No campaigns found matching the selected filters. Try changing the status or type filters, or create some campaigns first.', 'wprobo-engage-lite' ); ?>
@@ -231,7 +232,7 @@ class Tools {
 
 		// Use WordPress upload handler securely
 		$file = wp_unslash( $_FILES['campaign_file'] ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-		
+
 		// Secure file type check
 		$file_info = wp_check_filetype_and_ext( $file['tmp_name'], $file['name'], array( 'json' => 'application/json' ) );
 		if ( ! $file_info['ext'] || ! $file_info['type'] || $file_info['ext'] !== 'json' ) {
@@ -241,21 +242,21 @@ class Tools {
 		if ( ! function_exists( 'wp_handle_upload' ) ) {
 			require_once ABSPATH . 'wp-admin/includes/file.php';
 		}
-		
+
 		$upload_overrides = array(
 			'test_form' => false,
 			'mimes'     => array( 'json' => 'application/json' ),
 		);
-		
+
 		$movefile = wp_handle_upload( $file, $upload_overrides );
 
 		if ( $movefile && ! isset( $movefile['error'] ) ) {
 			// Read the file securely from the new path
 			$json_content = file_get_contents( $movefile['file'] ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
-			
+
 			// Delete the file after reading, we don't need to keep it
 			wp_delete_file( $movefile['file'] );
-			
+
 			$campaign_data = json_decode( $json_content, true );
 
 			if ( json_last_error() !== JSON_ERROR_NONE || ! $campaign_data ) {
@@ -277,14 +278,21 @@ class Tools {
 						++$imported_count;
 					}
 				}
-			} else {
-				if ( $this->create_campaign_from_data( $campaign_data ) ) {
+			} elseif ( $this->create_campaign_from_data( $campaign_data ) ) {
 					++$imported_count;
-				}
 			}
 
 			if ( $imported_count > 0 ) {
-				wp_safe_redirect( add_query_arg( array( 'page' => 'wprobo-engage-tools', 'import_status' => 'success', 'count' => $imported_count ), admin_url( 'admin.php' ) ) );
+				wp_safe_redirect(
+					add_query_arg(
+						array(
+							'page'          => 'wprobo-engage-tools',
+							'import_status' => 'success',
+							'count'         => $imported_count,
+						),
+						admin_url( 'admin.php' )
+					)
+				);
 				exit;
 			} else {
 				$this->redirect_with_message( 'error', 'import_failed' );
@@ -308,7 +316,7 @@ class Tools {
 		$post_id = wp_insert_post(
 			array(
 				'post_title'  => $campaign_title,
-				'post_type'   => 'wpr_campaign',
+				'post_type'   => 'wpre_campaign',
 				'post_status' => 'draft',
 			)
 		);
@@ -320,7 +328,7 @@ class Tools {
 		// Import settings if they exist
 		if ( isset( $data['settings'] ) && is_array( $data['settings'] ) ) {
 			foreach ( $data['settings'] as $key => $value ) {
-				$meta_key = '_wpr_engage_' . $key;
+				$meta_key = '_wpre_engage_' . $key;
 
 				// Handle display_rules specially
 				if ( 'display_rules' === $key && is_array( $value ) ) {
@@ -399,7 +407,7 @@ class Tools {
 		// Get campaign post
 		$campaign = get_post( $campaign_id );
 
-		if ( ! $campaign || $campaign->post_type !== 'wpr_campaign' ) {
+		if ( ! $campaign || $campaign->post_type !== 'wpre_campaign' ) {
 			wp_die( esc_html__( 'Invalid campaign.', 'wprobo-engage-lite' ) );
 		}
 
@@ -409,9 +417,9 @@ class Tools {
 
 		// Extract only WPRobo Engage meta keys
 		foreach ( $all_meta as $meta_key => $meta_value ) {
-			if ( strpos( $meta_key, '_wpr_engage_' ) === 0 ) {
-				// Remove the '_wpr_engage_' prefix for cleaner JSON
-				$clean_key = str_replace( '_wpr_engage_', '', $meta_key );
+			if ( strpos( $meta_key, '_wpre_engage_' ) === 0 ) {
+				// Remove the '_wpre_engage_' prefix for cleaner JSON
+				$clean_key = str_replace( '_wpre_engage_', '', $meta_key );
 				// Get the first value (meta values are arrays)
 				$value = isset( $meta_value[0] ) ? $meta_value[0] : '';
 
@@ -491,7 +499,7 @@ class Tools {
 
 		// Build query arguments
 		$args = array(
-			'post_type'      => 'wpr_campaign',
+			'post_type'      => 'wpre_campaign',
 			'posts_per_page' => -1,
 			'post_status'    => 'any',
 		);
@@ -501,14 +509,14 @@ class Tools {
 
 		if ( $status_filter !== 'all' ) {
 			$meta_query[] = array(
-				'key'   => '_wpr_engage_campaign_status',
+				'key'   => '_wpre_engage_campaign_status',
 				'value' => $status_filter,
 			);
 		}
 
 		if ( $type_filter !== 'all' ) {
 			$meta_query[] = array(
-				'key'   => '_wpr_engage_campaign_type',
+				'key'   => '_wpre_engage_campaign_type',
 				'value' => $type_filter,
 			);
 		}
@@ -534,9 +542,9 @@ class Tools {
 
 				// Extract only WPRobo Engage meta keys
 				foreach ( $all_meta as $meta_key => $meta_value ) {
-					if ( strpos( $meta_key, '_wpr_engage_' ) === 0 ) {
-						// Remove the '_wpr_engage_' prefix for cleaner JSON
-						$clean_key = str_replace( '_wpr_engage_', '', $meta_key );
+					if ( strpos( $meta_key, '_wpre_engage_' ) === 0 ) {
+						// Remove the '_wpre_engage_' prefix for cleaner JSON
+						$clean_key = str_replace( '_wpre_engage_', '', $meta_key );
 						// Get the first value (meta values are arrays)
 						$value = isset( $meta_value[0] ) ? $meta_value[0] : '';
 
@@ -560,7 +568,7 @@ class Tools {
 		}
 
 		if ( empty( $campaigns_data ) ) {
-			wp_safe_redirect( add_query_arg( 'wpr_export_error', 'no_campaigns', admin_url( 'admin.php?page=wprobo-engage-tools' ) ) );
+			wp_safe_redirect( add_query_arg( 'wpre_export_error', 'no_campaigns', admin_url( 'admin.php?page=wprobo-engage-tools' ) ) );
 			exit;
 		}
 

@@ -42,9 +42,9 @@ class Display_Engine {
 
 		$active_campaigns = new \WP_Query(
 			array(
-				'post_type'      => 'wpr_campaign',
+				'post_type'      => 'wpre_campaign',
 				'posts_per_page' => -1,
-				'meta_key'       => '_wpr_engage_campaign_status', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'meta_key'       => '_wpre_engage_campaign_status', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
 				'meta_value'     => 'active', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
 			)
 		);
@@ -60,7 +60,7 @@ class Display_Engine {
 		while ( $active_campaigns->have_posts() ) {
 			$active_campaigns->the_post();
 			$campaign_id   = get_the_ID();
-			$campaign_type = get_post_meta( $campaign_id, '_wpr_engage_campaign_type', true );
+			$campaign_type = get_post_meta( $campaign_id, '_wpre_engage_campaign_type', true );
 
 			// Skip if we've already rendered a campaign of this type
 			if ( isset( $rendered_types[ $campaign_type ] ) ) {
@@ -91,7 +91,7 @@ class Display_Engine {
 	 */
 	private function should_display_campaign( int $campaign_id ): bool {
 		// Check if advanced rule groups are being used
-		$rule_groups = get_post_meta( $campaign_id, '_wpr_engage_rule_groups', true );
+		$rule_groups = get_post_meta( $campaign_id, '_wpre_engage_rule_groups', true );
 
 		// If rule groups exist, use group evaluation logic
 		if ( ! empty( $rule_groups ) && is_array( $rule_groups ) ) {
@@ -99,7 +99,7 @@ class Display_Engine {
 		}
 
 		// Otherwise, use simple display rules
-		$display_rules = get_post_meta( $campaign_id, '_wpr_engage_display_rules', true );
+		$display_rules = get_post_meta( $campaign_id, '_wpre_engage_display_rules', true );
 
 		// If no rules are set, show the campaign everywhere (default behavior)
 		if ( empty( $display_rules ) || ! is_array( $display_rules ) ) {
@@ -239,65 +239,65 @@ class Display_Engine {
 	 */
 	private function render_campaign( int $campaign_id ): void {
 		// Get campaign type to determine which template to load
-		$campaign_type = get_post_meta( $campaign_id, '_wpr_engage_campaign_type', true );
+		$campaign_type = get_post_meta( $campaign_id, '_wpre_engage_campaign_type', true );
 
 		// Fetch all the data the template will need
 		$data = array(
 			'campaign_id'                 => $campaign_id,
-			'headline'                    => get_post_meta( $campaign_id, '_wpr_engage_design_headline', true ),
-			'content'                     => get_post_meta( $campaign_id, '_wpr_engage_design_content', true ),
-			'button'                      => get_post_meta( $campaign_id, '_wpr_engage_design_button', true ),
-			'email_placeholder'           => get_post_meta( $campaign_id, '_wpr_engage_design_email_placeholder', true ),
-			'bg_color'                    => get_post_meta( $campaign_id, '_wpr_engage_style_bg_color', true ),
-			'headline_color'              => get_post_meta( $campaign_id, '_wpr_engage_style_headline_color', true ),
-			'content_color'               => get_post_meta( $campaign_id, '_wpr_engage_style_content_color', true ),
-			'button_bg_color'             => get_post_meta( $campaign_id, '_wpr_engage_style_button_bg_color', true ),
-			'button_text_color'           => get_post_meta( $campaign_id, '_wpr_engage_style_button_text_color', true ),
-			'border_radius'               => get_post_meta( $campaign_id, '_wpr_engage_style_border_radius', true ),
-			'border_width'                => get_post_meta( $campaign_id, '_wpr_engage_style_border_width', true ),
-			'border_color'                => get_post_meta( $campaign_id, '_wpr_engage_style_border_color', true ),
-			'box_shadow_enabled'          => get_post_meta( $campaign_id, '_wpr_engage_style_box_shadow_enabled', true ),
-			'box_shadow_color'            => get_post_meta( $campaign_id, '_wpr_engage_style_box_shadow_color', true ),
-			'box_shadow_x'                => get_post_meta( $campaign_id, '_wpr_engage_style_box_shadow_x', true ),
-			'box_shadow_y'                => get_post_meta( $campaign_id, '_wpr_engage_style_box_shadow_y', true ),
-			'box_shadow_blur'             => get_post_meta( $campaign_id, '_wpr_engage_style_box_shadow_blur', true ),
-			'box_shadow_spread'           => get_post_meta( $campaign_id, '_wpr_engage_style_box_shadow_spread', true ),
-			'bg_image_url'                => get_post_meta( $campaign_id, '_wpr_engage_style_bg_image_url', true ),
-			'bg_image_repeat'             => get_post_meta( $campaign_id, '_wpr_engage_style_bg_image_repeat', true ),
-			'bg_image_position'           => get_post_meta( $campaign_id, '_wpr_engage_style_bg_image_position', true ),
-			'bg_image_size'               => get_post_meta( $campaign_id, '_wpr_engage_style_bg_image_size', true ),
-			'bg_media_type'               => get_post_meta( $campaign_id, '_wpr_engage_style_bg_media_type', true ),
-			'close_btn_color'             => get_post_meta( $campaign_id, '_wpr_engage_style_close_btn_color', true ),
-			'close_btn_hover_color'       => get_post_meta( $campaign_id, '_wpr_engage_style_close_btn_hover_color', true ),
-			'close_btn_bg_color'          => get_post_meta( $campaign_id, '_wpr_engage_style_close_btn_bg_color', true ),
-			'close_btn_shape'             => get_post_meta( $campaign_id, '_wpr_engage_style_close_btn_shape', true ),
-			'esc_to_close'                => get_post_meta( $campaign_id, '_wpr_engage_esc_to_close', true ),
-			'show_close_icon'             => get_post_meta( $campaign_id, '_wpr_engage_show_close_icon', true ),
-			'form_type'                   => get_post_meta( $campaign_id, '_wpr_engage_form_type', true ) ?: 'native',
-			'form_fields'                 => get_post_meta( $campaign_id, '_wpr_engage_form_fields', true ),
-			'success_message_headline'    => get_post_meta( $campaign_id, '_wpr_engage_success_message_headline', true ) ?: __( 'Thank you!', 'wprobo-engage-lite' ),
-			'success_message_content'     => get_post_meta( $campaign_id, '_wpr_engage_success_message_content', true ) ?: __( 'Your subscription has been confirmed.', 'wprobo-engage-lite' ),
-			'success_show_icon'           => get_post_meta( $campaign_id, '_wpr_engage_success_show_icon', true ) !== '' ? get_post_meta( $campaign_id, '_wpr_engage_success_show_icon', true ) : '1',
-			'success_icon_type'           => get_post_meta( $campaign_id, '_wpr_engage_success_icon_type', true ) ?: 'checkmark',
-			'success_icon_color'          => get_post_meta( $campaign_id, '_wpr_engage_success_icon_color', true ) ?: '#059669',
-			'success_title_color'         => get_post_meta( $campaign_id, '_wpr_engage_success_title_color', true ) ?: '#059669',
-			'success_content_color'       => get_post_meta( $campaign_id, '_wpr_engage_success_content_color', true ) ?: '#4B5563',
-			'success_title_font_size'     => get_post_meta( $campaign_id, '_wpr_engage_success_title_font_size', true ) ?: '24',
-			'success_content_font_size'   => get_post_meta( $campaign_id, '_wpr_engage_success_content_font_size', true ) ?: '16',
-			'success_title_font_weight'   => get_post_meta( $campaign_id, '_wpr_engage_success_title_font_weight', true ) ?: 'bold',
-			'success_content_font_weight' => get_post_meta( $campaign_id, '_wpr_engage_success_content_font_weight', true ) ?: 'normal',
+			'headline'                    => get_post_meta( $campaign_id, '_wpre_engage_design_headline', true ),
+			'content'                     => get_post_meta( $campaign_id, '_wpre_engage_design_content', true ),
+			'button'                      => get_post_meta( $campaign_id, '_wpre_engage_design_button', true ),
+			'email_placeholder'           => get_post_meta( $campaign_id, '_wpre_engage_design_email_placeholder', true ),
+			'bg_color'                    => get_post_meta( $campaign_id, '_wpre_engage_style_bg_color', true ),
+			'headline_color'              => get_post_meta( $campaign_id, '_wpre_engage_style_headline_color', true ),
+			'content_color'               => get_post_meta( $campaign_id, '_wpre_engage_style_content_color', true ),
+			'button_bg_color'             => get_post_meta( $campaign_id, '_wpre_engage_style_button_bg_color', true ),
+			'button_text_color'           => get_post_meta( $campaign_id, '_wpre_engage_style_button_text_color', true ),
+			'border_radius'               => get_post_meta( $campaign_id, '_wpre_engage_style_border_radius', true ),
+			'border_width'                => get_post_meta( $campaign_id, '_wpre_engage_style_border_width', true ),
+			'border_color'                => get_post_meta( $campaign_id, '_wpre_engage_style_border_color', true ),
+			'box_shadow_enabled'          => get_post_meta( $campaign_id, '_wpre_engage_style_box_shadow_enabled', true ),
+			'box_shadow_color'            => get_post_meta( $campaign_id, '_wpre_engage_style_box_shadow_color', true ),
+			'box_shadow_x'                => get_post_meta( $campaign_id, '_wpre_engage_style_box_shadow_x', true ),
+			'box_shadow_y'                => get_post_meta( $campaign_id, '_wpre_engage_style_box_shadow_y', true ),
+			'box_shadow_blur'             => get_post_meta( $campaign_id, '_wpre_engage_style_box_shadow_blur', true ),
+			'box_shadow_spread'           => get_post_meta( $campaign_id, '_wpre_engage_style_box_shadow_spread', true ),
+			'bg_image_url'                => get_post_meta( $campaign_id, '_wpre_engage_style_bg_image_url', true ),
+			'bg_image_repeat'             => get_post_meta( $campaign_id, '_wpre_engage_style_bg_image_repeat', true ),
+			'bg_image_position'           => get_post_meta( $campaign_id, '_wpre_engage_style_bg_image_position', true ),
+			'bg_image_size'               => get_post_meta( $campaign_id, '_wpre_engage_style_bg_image_size', true ),
+			'bg_media_type'               => get_post_meta( $campaign_id, '_wpre_engage_style_bg_media_type', true ),
+			'close_btn_color'             => get_post_meta( $campaign_id, '_wpre_engage_style_close_btn_color', true ),
+			'close_btn_hover_color'       => get_post_meta( $campaign_id, '_wpre_engage_style_close_btn_hover_color', true ),
+			'close_btn_bg_color'          => get_post_meta( $campaign_id, '_wpre_engage_style_close_btn_bg_color', true ),
+			'close_btn_shape'             => get_post_meta( $campaign_id, '_wpre_engage_style_close_btn_shape', true ),
+			'esc_to_close'                => get_post_meta( $campaign_id, '_wpre_engage_esc_to_close', true ),
+			'show_close_icon'             => get_post_meta( $campaign_id, '_wpre_engage_show_close_icon', true ),
+			'form_type'                   => get_post_meta( $campaign_id, '_wpre_engage_form_type', true ) ?: 'native',
+			'form_fields'                 => get_post_meta( $campaign_id, '_wpre_engage_form_fields', true ),
+			'success_message_headline'    => get_post_meta( $campaign_id, '_wpre_engage_success_message_headline', true ) ?: __( 'Thank you!', 'wprobo-engage-lite' ),
+			'success_message_content'     => get_post_meta( $campaign_id, '_wpre_engage_success_message_content', true ) ?: __( 'Your subscription has been confirmed.', 'wprobo-engage-lite' ),
+			'success_show_icon'           => get_post_meta( $campaign_id, '_wpre_engage_success_show_icon', true ) !== '' ? get_post_meta( $campaign_id, '_wpre_engage_success_show_icon', true ) : '1',
+			'success_icon_type'           => get_post_meta( $campaign_id, '_wpre_engage_success_icon_type', true ) ?: 'checkmark',
+			'success_icon_color'          => get_post_meta( $campaign_id, '_wpre_engage_success_icon_color', true ) ?: '#059669',
+			'success_title_color'         => get_post_meta( $campaign_id, '_wpre_engage_success_title_color', true ) ?: '#059669',
+			'success_content_color'       => get_post_meta( $campaign_id, '_wpre_engage_success_content_color', true ) ?: '#4B5563',
+			'success_title_font_size'     => get_post_meta( $campaign_id, '_wpre_engage_success_title_font_size', true ) ?: '24',
+			'success_content_font_size'   => get_post_meta( $campaign_id, '_wpre_engage_success_content_font_size', true ) ?: '16',
+			'success_title_font_weight'   => get_post_meta( $campaign_id, '_wpre_engage_success_title_font_weight', true ) ?: 'bold',
+			'success_content_font_weight' => get_post_meta( $campaign_id, '_wpre_engage_success_content_font_weight', true ) ?: 'normal',
 		);
 
 		$data['ab_test_enabled'] = false;
 
 		// For floating bar, add position setting
 		if ( 'floating-bar' === $campaign_type ) {
-			$data['position'] = get_post_meta( $campaign_id, '_wpr_engage_bar_position', true );
+			$data['position'] = get_post_meta( $campaign_id, '_wpre_engage_bar_position', true );
 		}
 
 		// For slide-in, add position setting
 		if ( 'slide-in' === $campaign_type ) {
-			$data['position'] = get_post_meta( $campaign_id, '_wpr_engage_slide_position', true );
+			$data['position'] = get_post_meta( $campaign_id, '_wpre_engage_slide_position', true );
 		}
 
 		// Determine which template file to load based on campaign type
@@ -316,5 +316,4 @@ class Display_Engine {
 			include $template_path;
 		}
 	}
-
 }

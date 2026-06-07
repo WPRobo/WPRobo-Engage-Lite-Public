@@ -274,30 +274,31 @@
 		// Each trigger type has an icon, title, description, and an optional
 		// tip. Content is rendered into #wpr-trigger-info-box so users can see
 		// at a glance what the selected trigger will do.
+		var i18n = WPRoboEngage.i18n || {};
 		const triggerDescriptions = {
 			'': {
 				icon: '✋',
-				title: 'No Trigger — Manual',
-				description: 'This campaign will not trigger automatically. Use a shortcode or the JS API to show it when you need to.',
-				tips: 'Useful for thank-you pages, custom button clicks, or multi-step funnels.'
+				title: i18n.triggerManualTitle || '',
+				description: i18n.triggerManualDesc || '',
+				tips: i18n.triggerManualTips || ''
 			},
 			'timed_delay': {
 				icon: '⏱',
-				title: 'Timed Delay',
-				description: 'Shows the popup after the visitor has been on the page for a specified number of seconds.',
-				tips: 'Use 30–60s for content pages, 5–15s for high-intent landing pages.'
+				title: i18n.triggerTimedTitle || '',
+				description: i18n.triggerTimedDesc || '',
+				tips: i18n.triggerTimedTips || ''
 			},
 			'scroll_depth': {
 				icon: '📜',
-				title: 'Scroll Depth',
-				description: 'Shows the popup once the visitor has scrolled a set percentage down the page.',
-				tips: '50–70% scroll depth indicates engaged readers — great for content upgrades.'
+				title: i18n.triggerScrollTitle || '',
+				description: i18n.triggerScrollDesc || '',
+				tips: i18n.triggerScrollTips || ''
 			},
 			'exit_intent': {
 				icon: '🚪',
-				title: 'Exit-Intent',
-				description: 'Shows the popup when the user moves their mouse towards the top of the browser, indicating they are about to leave.',
-				tips: 'Pair with urgency messaging and offers for abandoning visitors.'
+				title: i18n.triggerExitTitle || '',
+				description: i18n.triggerExitDesc || '',
+				tips: i18n.triggerExitTips || ''
 			}
 		};
 
@@ -333,14 +334,14 @@
 		renderTriggerInfoBox($('#wpr-trigger-type').val() || '');
 
 		// Sync trigger radio cards → hidden select so existing handlers work.
-		$('input[name="wpr_trigger_type_radio"]').on('change', function () {
+		$('input[name="wpre_trigger_type_radio"]').on('change', function () {
 			$('#wpr-trigger-type').val($(this).val()).trigger('change');
 		});
 
 		// Reverse sync: hidden select → radio cards (for Revert Changes, etc.)
 		$('#wpr-trigger-type').on('change', function () {
 			var val = $(this).val();
-			$('input[name="wpr_trigger_type_radio"]').each(function () {
+			$('input[name="wpre_trigger_type_radio"]').each(function () {
 				$(this).prop('checked', $(this).val() === val);
 			});
 		});
@@ -413,37 +414,46 @@
 			var startTime = $('#wpr-schedule-start-time').val();
 			var endTime = $('#wpr-schedule-end-time').val();
 
+			var si = WPRoboEngage.i18n || {};
 			if (startDate && endDate) {
-				parts.push('Runs from <strong>' + startDate + '</strong> to <strong>' + endDate + '</strong>');
+				parts.push((si.scheduleRunsFromTo || '').replace('%1$s', '<strong>' + startDate + '</strong>').replace('%2$s', '<strong>' + endDate + '</strong>'));
 			} else if (startDate) {
-				parts.push('Starts <strong>' + startDate + '</strong>');
+				parts.push((si.scheduleStarts || '').replace('%s', '<strong>' + startDate + '</strong>'));
 			}
 
 			if (startTime && endTime) {
-				parts.push('between <strong>' + startTime + '</strong> and <strong>' + endTime + '</strong>');
+				parts.push((si.scheduleBetween || '').replace('%1$s', '<strong>' + startTime + '</strong>').replace('%2$s', '<strong>' + endTime + '</strong>'));
 			}
 
 			var days = [];
+			var dayMap = {
+				mon: si.dayMon || 'Mon',
+				tue: si.dayTue || 'Tue',
+				wed: si.dayWed || 'Wed',
+				thu: si.dayThu || 'Thu',
+				fri: si.dayFri || 'Fri',
+				sat: si.daySat || 'Sat',
+				sun: si.daySun || 'Sun'
+			};
 			$('.wpr-schedule-day:checked').each(function () {
-				var dayMap = { mon: 'Mon', tue: 'Tue', wed: 'Wed', thu: 'Thu', fri: 'Fri', sat: 'Sat', sun: 'Sun' };
 				days.push(dayMap[$(this).val()] || $(this).val());
 			});
 
 			if (days.length > 0 && days.length < 7) {
-				parts.push('on <strong>' + days.join(', ') + '</strong>');
+				parts.push((si.scheduleOn || '').replace('%s', '<strong>' + days.join(', ') + '</strong>'));
 			} else if (days.length === 7) {
-				parts.push('every day');
+				parts.push(si.scheduleEveryDay || '');
 			}
 
 			if ($('#wpr-schedule-time-range-enabled').is(':checked')) {
 				var timeStart = $('#wpr-schedule-time-start').val();
 				var timeEnd = $('#wpr-schedule-time-end').val();
 				if (timeStart && timeEnd) {
-					parts.push('active hours <strong>' + timeStart + ' – ' + timeEnd + '</strong>');
+					parts.push((si.scheduleActiveHours || '').replace('%1$s', '<strong>' + timeStart + '</strong>').replace('%2$s', '<strong>' + timeEnd + '</strong>'));
 				}
 			}
 
-			$('#wpr-schedule-summary-text').html(parts.length ? parts.join(', ') + '.' : 'Configure dates and days to see your schedule summary.');
+			$('#wpr-schedule-summary-text').html(parts.length ? parts.join(', ') + '.' : (si.scheduleConfigPrompt || ''));
 		}
 
 		// Update summary on any schedule input change
@@ -906,16 +916,16 @@
 
 			// Custom JS textarea
 			if (rule.type === 'custom_js') {
-				return `<textarea class="wpr-group-rule-value wpr-w-full wpr-text-xs wpr-border wpr-border-gray-300 wpr-rounded wpr-p-1 wpr-font-mono" placeholder="return true;" data-group-index="${groupIndex}" data-rule-index="${ruleIndex}" rows="2" style="width: 100%; font-size: 11px; padding: 4px; border: 1px solid #d1d5db; border-radius: 4px; font-family: monospace;">${rule.value || ''}</textarea>`;
+				return `<textarea class="wpr-group-rule-value wpr-w-full wpr-text-xs wpr-border wpr-border-gray-300 wpr-rounded wpr-p-1 wpr-font-mono" placeholder="${i18n.phReturnTrue || 'return true;'}" data-group-index="${groupIndex}" data-rule-index="${ruleIndex}" rows="2" style="width: 100%; font-size: 11px; padding: 4px; border: 1px solid #d1d5db; border-radius: 4px; font-family: monospace;">${rule.value || ''}</textarea>`;
 			}
 
 			// Other text/number inputs remain as before
 			let inputType = 'text';
-			let placeholder = 'Value';
+			let placeholder = i18n.phValue || 'Value';
 
 			if (['time_on_site', 'scroll_depth', 'page_views_session', 'page_views_lifetime'].includes(rule.type)) {
 				inputType = 'number';
-				placeholder = 'Number';
+				placeholder = i18n.phNumber || 'Number';
 			}
 
 			return `<input type="${inputType}" class="wpr-group-rule-value wpr-w-full wpr-text-xs wpr-border wpr-border-gray-300 wpr-rounded wpr-p-1" placeholder="${placeholder}" value="${rule.value || ''}" data-group-index="${groupIndex}" data-rule-index="${ruleIndex}" style="width: 100%; font-size: 11px; padding: 4px; border: 1px solid #d1d5db; border-radius: 4px;">`;
@@ -927,7 +937,7 @@
 			if (!$select.length) return;
 
 			$select.select2({
-				placeholder: 'Select a page...',
+				placeholder: i18n.phSelectPage || 'Select a page...',
 				allowClear: true,
 				width: '100%',
 				ajax: {
@@ -977,7 +987,7 @@
 			if (!$select.length) return;
 
 			$select.select2({
-				placeholder: 'Select a post...',
+				placeholder: i18n.phSelectPost || 'Select a post...',
 				allowClear: true,
 				width: '100%',
 				ajax: {
@@ -1027,7 +1037,7 @@
 			if (!$select.length) return;
 
 			$select.select2({
-				placeholder: 'Select a category...',
+				placeholder: i18n.phSelectCategory || 'Select a category...',
 				allowClear: true,
 				width: '100%',
 				ajax: {
@@ -1077,7 +1087,7 @@
 			if (!$select.length) return;
 
 			$select.select2({
-				placeholder: 'Select a tag...',
+				placeholder: i18n.phSelectTag || 'Select a tag...',
 				allowClear: true,
 				width: '100%',
 				ajax: {
@@ -1127,7 +1137,7 @@
 			if (!$select.length) return;
 
 			$select.select2({
-				placeholder: 'Select an item...',
+				placeholder: i18n.phSelectItem || 'Select an item...',
 				allowClear: true,
 				width: '100%',
 				ajax: {
@@ -1178,7 +1188,7 @@
 			if (!$select.length) return;
 
 			$select.select2({
-				placeholder: 'Select a page...',
+				placeholder: i18n.phSelectPage || 'Select a page...',
 				allowClear: true,
 				width: '100%',
 				ajax: {
@@ -1227,7 +1237,7 @@
 			if (!$select.length) return;
 
 			$select.select2({
-				placeholder: 'Select a post...',
+				placeholder: i18n.phSelectPost || 'Select a post...',
 				allowClear: true,
 				width: '100%',
 				ajax: {
@@ -1276,7 +1286,7 @@
 			if (!$select.length) return;
 
 			$select.select2({
-				placeholder: 'Select a category...',
+				placeholder: i18n.phSelectCategory || 'Select a category...',
 				allowClear: true,
 				width: '100%',
 				ajax: {
@@ -1325,7 +1335,7 @@
 			if (!$select.length) return;
 
 			$select.select2({
-				placeholder: 'Select a tag...',
+				placeholder: i18n.phSelectTag || 'Select a tag...',
 				allowClear: true,
 				width: '100%',
 				ajax: {
@@ -1532,7 +1542,7 @@
 					ruleHtml += `
 						<div>
 							<input type="text" class="wpr-rule-value wpr-w-full wpr-border wpr-border-gray-300 wpr-rounded-md wpr-p-2 wpr-text-sm" 
-								placeholder="Regular expression pattern" value="${rule.value || ''}" data-index="${index}" style="width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 4px;">
+								placeholder="${i18n.phRegexPattern || 'Regular expression pattern'}" value="${rule.value || ''}" data-index="${index}" style="width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 4px;">
 							<p class="wpr-text-xs wpr-text-gray-500 wpr-mt-1" style="font-size: 11px; color: #6b7280; margin-top: 4px;">Example: /product/[0-9]+/</p>
 						</div>
 					`;
@@ -1566,7 +1576,7 @@
 					ruleHtml += `
 						<div>
 							<input type="text" class="wpr-rule-value wpr-w-full wpr-border wpr-border-gray-300 wpr-rounded-md wpr-p-2 wpr-text-sm" 
-								placeholder="Post type slug" value="${rule.value || ''}" data-index="${index}" style="width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 4px;">
+								placeholder="${i18n.phPostTypeSlug || 'Post type slug'}" value="${rule.value || ''}" data-index="${index}" style="width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 4px;">
 						</div>
 					`;
 				}
@@ -1589,7 +1599,7 @@
 					ruleHtml += `
 						<div>
 							<input type="text" class="wpr-rule-value wpr-w-full wpr-border wpr-border-gray-300 wpr-rounded-md wpr-p-2 wpr-text-sm" 
-								placeholder="Role slug (e.g., subscriber, editor, administrator)" value="${rule.value || ''}" data-index="${index}" style="width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 4px;">
+								placeholder="${i18n.phRoleSlug || 'Role slug'}" value="${rule.value || ''}" data-index="${index}" style="width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 4px;">
 							<p class="wpr-text-xs wpr-text-gray-500 wpr-mt-1" style="font-size: 11px; color: #6b7280; margin-top: 4px;">For multiple roles, separate with commas</p>
 						</div>
 					`;
@@ -1599,7 +1609,7 @@
 					ruleHtml += `
 						<div>
 							<input type="text" class="wpr-rule-value wpr-w-full wpr-border wpr-border-gray-300 wpr-rounded-md wpr-p-2 wpr-text-sm" 
-								placeholder="Domain (e.g., facebook.com, google.com)" value="${rule.value || ''}" data-index="${index}" style="width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 4px;">
+								placeholder="${i18n.phDomain || 'Domain'}" value="${rule.value || ''}" data-index="${index}" style="width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 4px;">
 							<p class="wpr-text-xs wpr-text-gray-500 wpr-mt-1" style="font-size: 11px; color: #6b7280; margin-top: 4px;">For multiple domains, separate with commas</p>
 						</div>
 					`;
@@ -1617,7 +1627,7 @@
 					ruleHtml += `
 						<div>
 							<input type="text" class="wpr-rule-value wpr-w-full wpr-border wpr-border-gray-300 wpr-rounded-md wpr-p-2 wpr-text-sm" 
-								placeholder="Browser (chrome, firefox, safari, edge)" value="${rule.value || ''}" data-index="${index}" style="width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 4px;">
+								placeholder="${i18n.phBrowser || 'Browser'}" value="${rule.value || ''}" data-index="${index}" style="width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 4px;">
 							<p class="wpr-text-xs wpr-text-gray-500 wpr-mt-1" style="font-size: 11px; color: #6b7280; margin-top: 4px;">For multiple browsers, separate with commas</p>
 						</div>
 					`;
@@ -1627,7 +1637,7 @@
 					ruleHtml += `
 						<div>
 							<input type="text" class="wpr-rule-value wpr-w-full wpr-border wpr-border-gray-300 wpr-rounded-md wpr-p-2 wpr-text-sm" 
-								placeholder="OS (windows, macos, ios, android, linux)" value="${rule.value || ''}" data-index="${index}" style="width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 4px;">
+								placeholder="${i18n.phOS || 'OS'}" value="${rule.value || ''}" data-index="${index}" style="width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 4px;">
 							<p class="wpr-text-xs wpr-text-gray-500 wpr-mt-1" style="font-size: 11px; color: #6b7280; margin-top: 4px;">For multiple OS, separate with commas</p>
 						</div>
 					`;
@@ -1637,7 +1647,7 @@
 					ruleHtml += `
 						<div>
 							<input type="number" class="wpr-rule-value wpr-w-full wpr-border wpr-border-gray-300 wpr-rounded-md wpr-p-2 wpr-text-sm" 
-								placeholder="Seconds" value="${rule.value || ''}" data-index="${index}" min="0" style="width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 4px;">
+								placeholder="${i18n.phSeconds || 'Seconds'}" value="${rule.value || ''}" data-index="${index}" min="0" style="width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 4px;">
 							<p class="wpr-text-xs wpr-text-gray-500 wpr-mt-1" style="font-size: 11px; color: #6b7280; margin-top: 4px;">Show after visitor has been on site for X seconds</p>
 						</div>
 					`;
@@ -1647,7 +1657,7 @@
 					ruleHtml += `
 						<div>
 							<input type="number" class="wpr-rule-value wpr-w-full wpr-border wpr-border-gray-300 wpr-rounded-md wpr-p-2 wpr-text-sm" 
-								placeholder="Percentage (0-100)" value="${rule.value || ''}" data-index="${index}" min="0" max="100" style="width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 4px;">
+								placeholder="${i18n.phPercentage || 'Percentage'}" value="${rule.value || ''}" data-index="${index}" min="0" max="100" style="width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 4px;">
 							<p class="wpr-text-xs wpr-text-gray-500 wpr-mt-1" style="font-size: 11px; color: #6b7280; margin-top: 4px;">Show after visitor has scrolled X% of the page</p>
 						</div>
 					`;
@@ -1657,7 +1667,7 @@
 					ruleHtml += `
 						<div>
 							<input type="number" class="wpr-rule-value wpr-w-full wpr-border wpr-border-gray-300 wpr-rounded-md wpr-p-2 wpr-text-sm" 
-								placeholder="Number of pages" value="${rule.value || ''}" data-index="${index}" min="1" style="width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 4px;">
+								placeholder="${i18n.phNumberOfPages || 'Number of pages'}" value="${rule.value || ''}" data-index="${index}" min="1" style="width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 4px;">
 							<p class="wpr-text-xs wpr-text-gray-500 wpr-mt-1" style="font-size: 11px; color: #6b7280; margin-top: 4px;">Show after X page views in current session</p>
 						</div>
 					`;
@@ -1667,7 +1677,7 @@
 					ruleHtml += `
 						<div>
 							<input type="number" class="wpr-rule-value wpr-w-full wpr-border wpr-border-gray-300 wpr-rounded-md wpr-p-2 wpr-text-sm" 
-								placeholder="Number of pages" value="${rule.value || ''}" data-index="${index}" min="1" style="width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 4px;">
+								placeholder="${i18n.phNumberOfPages || 'Number of pages'}" value="${rule.value || ''}" data-index="${index}" min="1" style="width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 4px;">
 							<p class="wpr-text-xs wpr-text-gray-500 wpr-mt-1" style="font-size: 11px; color: #6b7280; margin-top: 4px;">Show after X total page views (lifetime)</p>
 						</div>
 					`;
@@ -1677,7 +1687,7 @@
 					ruleHtml += `
 						<div>
 							<textarea class="wpr-rule-value wpr-w-full wpr-border wpr-border-gray-300 wpr-rounded-md wpr-p-2 wpr-text-sm wpr-font-mono" 
-								placeholder="return true; // Your JavaScript condition" data-index="${index}" rows="3" style="width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 4px; font-family: monospace;">${rule.value || ''}</textarea>
+								placeholder="${i18n.phJsCondition || 'return true;'}" data-index="${index}" rows="3" style="width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 4px; font-family: monospace;">${rule.value || ''}</textarea>
 							<p class="wpr-text-xs wpr-text-gray-500 wpr-mt-1" style="font-size: 11px; color: #6b7280; margin-top: 4px;">
 								<strong>⚠️ Advanced:</strong> Write JavaScript that returns <code>true</code> or <code>false</code>. Example: <code>return window.location.pathname.includes('/shop/');</code>
 							</p>
@@ -1946,21 +1956,21 @@
 			$btn.data('wpr-original-value', $btn.val());
 			$btn.val('Saving...').addClass('wpr-btn-loading');
 			// Sync schedule fields to hidden inputs for form submission
-			$('#wpr_engage_schedule_enabled_hidden').val($('#wpr-schedule-enabled').is(':checked') ? '1' : '0');
-			$('#wpr_engage_schedule_start_date_hidden').val($('#wpr-schedule-start-date').val());
-			$('#wpr_engage_schedule_start_time_hidden').val($('#wpr-schedule-start-time').val());
-			$('#wpr_engage_schedule_end_date_hidden').val($('#wpr-schedule-end-date').val());
-			$('#wpr_engage_schedule_end_time_hidden').val($('#wpr-schedule-end-time').val());
-			$('#wpr_engage_schedule_time_range_enabled_hidden').val($('#wpr-schedule-time-range-enabled').is(':checked') ? '1' : '0');
-			$('#wpr_engage_schedule_time_start_hidden').val($('#wpr-schedule-time-start').val());
-			$('#wpr_engage_schedule_time_end_hidden').val($('#wpr-schedule-time-end').val());
+			$('#wpre_engage_schedule_enabled_hidden').val($('#wpr-schedule-enabled').is(':checked') ? '1' : '0');
+			$('#wpre_engage_schedule_start_date_hidden').val($('#wpr-schedule-start-date').val());
+			$('#wpre_engage_schedule_start_time_hidden').val($('#wpr-schedule-start-time').val());
+			$('#wpre_engage_schedule_end_date_hidden').val($('#wpr-schedule-end-date').val());
+			$('#wpre_engage_schedule_end_time_hidden').val($('#wpr-schedule-end-time').val());
+			$('#wpre_engage_schedule_time_range_enabled_hidden').val($('#wpr-schedule-time-range-enabled').is(':checked') ? '1' : '0');
+			$('#wpre_engage_schedule_time_start_hidden').val($('#wpr-schedule-time-start').val());
+			$('#wpre_engage_schedule_time_end_hidden').val($('#wpr-schedule-time-end').val());
 
 			// Sync days of week
 			$('.wpr-schedule-day-hidden').remove();
 			$('.wpr-schedule-day:checked').each(function () {
 				$('<input>').attr({
 					type: 'hidden',
-					name: 'wpr_engage_schedule_days_of_week[]',
+					name: 'wpre_engage_schedule_days_of_week[]',
 					value: $(this).val(),
 					class: 'wpr-schedule-day-hidden'
 				}).appendTo('#wpr-tab-schedule');
@@ -2673,7 +2683,7 @@
 		}
 
 		// Toggle between native and embed form sections
-		$('input[name="wpr_engage_form_type"]').on('change', function () {
+		$('input[name="wpre_engage_form_type"]').on('change', function () {
 			const formType = $(this).val();
 
 			if (formType === 'native') {
@@ -2696,7 +2706,7 @@
 
 		// Update preview form fields
 		function updatePreviewFormFields() {
-			const formType = $('input[name="wpr_engage_form_type"]:checked').val();
+			const formType = $('input[name="wpre_engage_form_type"]:checked').val();
 			const $previewForm = $('#wpr-preview-wrapper').find('.wpr-mt-6');
 
 			if (formType === 'embed') {
@@ -2800,7 +2810,7 @@
 					<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; border-bottom: 1px dashed #e2e8f0; padding-bottom: 12px;">
 						<div style="display: flex; align-items: center; gap: 10px;">
 							<span class="wpr-drag-handle" style="cursor: grab; color: #cbd5e1; font-size: 16px; line-height: 1; user-select: none;" title="Drag to reorder">⠗</span><span class="wpr-field-number" style="font-size: 12px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.025em;">Field #${fieldIndex + 1}</span>
-							<select name="wpr_engage_form_fields[${fieldIndex}][type]" class="wpr-field-type" style="height: 34px; font-size: 13px; border-radius: 6px; padding: 0 10px; border: 1px solid #cbd5e1; outline: none; background: white; color: #334155;">
+							<select name="wpre_engage_form_fields[${fieldIndex}][type]" class="wpr-field-type" style="height: 34px; font-size: 13px; border-radius: 6px; padding: 0 10px; border: 1px solid #cbd5e1; outline: none; background: white; color: #334155;">
 								<option value="email" ${type === "email" ? "selected" : ""}>Email</option>
 								<option value="text" ${type === "text" ? "selected" : ""}>Text</option>
 								<option value="phone" ${type === "phone" ? "selected" : ""}>Phone</option>
@@ -2815,15 +2825,15 @@
 					<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 12px;">
 						<div>
 							<label style="display: block; font-size: 11px; font-weight: 700; color: #64748b; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.025em;">Label</label>
-							<input type="text" name="wpr_engage_form_fields[${fieldIndex}][label]" value="" placeholder="e.g. Full Name" class="wpr-field-label-input" style="width: 100%; height: 40px; font-size: 13px; border-radius: 8px; border: 1px solid #cbd5e1; padding: 0 12px; background: white; color: #334155;">
+							<input type="text" name="wpre_engage_form_fields[${fieldIndex}][label]" value="" placeholder="${i18n.phFullName || 'e.g. Full Name'}" class="wpr-field-label-input" style="width: 100%; height: 40px; font-size: 13px; border-radius: 8px; border: 1px solid #cbd5e1; padding: 0 12px; background: white; color: #334155;">
 						</div>
 						<div>
 							<label style="display: block; font-size: 11px; font-weight: 700; color: #64748b; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.025em;">Placeholder</label>
-							<input type="text" name="wpr_engage_form_fields[${fieldIndex}][placeholder]" value="" placeholder="e.g. Enter your name" class="wpr-field-placeholder-input" style="width: 100%; height: 40px; font-size: 13px; border-radius: 8px; border: 1px solid #cbd5e1; padding: 0 12px; background: white; color: #334155;">
+							<input type="text" name="wpre_engage_form_fields[${fieldIndex}][placeholder]" value="" placeholder="${i18n.phEnterName || 'e.g. Enter your name'}" class="wpr-field-placeholder-input" style="width: 100%; height: 40px; font-size: 13px; border-radius: 8px; border: 1px solid #cbd5e1; padding: 0 12px; background: white; color: #334155;">
 						</div>
 					</div>
 					<label style="display: flex; align-items: center; gap: 10px; font-size: 13px; cursor: pointer; color: #475569; font-weight: 500;">
-						<input type="checkbox" name="wpr_engage_form_fields[${fieldIndex}][required]" value="1" style="width: 18px; height: 18px; border-radius: 4px; border-color: #cbd5e1;">
+						<input type="checkbox" name="wpre_engage_form_fields[${fieldIndex}][required]" value="1" style="width: 18px; height: 18px; border-radius: 4px; border-color: #cbd5e1;">
 						Required Field
 					</label>
 				</div>
@@ -2842,7 +2852,7 @@
 				$item.find('.wpr-field-number').text('Field #' + (i + 1));
 				$item.find('[name]').each(function () {
 					var name = $(this).attr('name');
-					$(this).attr('name', name.replace(/wpr_engage_form_fields\[\d+\]/, 'wpr_engage_form_fields[' + i + ']'));
+					$(this).attr('name', name.replace(/wpre_engage_form_fields\[\d+\]/, 'wpre_engage_form_fields[' + i + ']'));
 				});
 			});
 			fieldIndex = $('#wpr-form-fields-container .wpr-form-field-item').length;

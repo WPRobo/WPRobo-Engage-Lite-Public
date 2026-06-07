@@ -3,9 +3,9 @@
 Contributors: wprobo, alishanvr
 Tags: popup, lead generation, email opt-in, floating bar, campaign
 Requires at least: 5.8
-Tested up to: 6.9
+Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -29,12 +29,6 @@ Create beautiful popup and floating-bar campaigns to grow your email list and co
 * **Import / Export** – Transfer campaigns between sites as JSON
 * **Role-Based Access** – Control which admin roles can manage campaigns
 
-= Source Code =
-
-The unminified source files for this plugin are available on GitHub:
-https://github.com/WPRobo/WPRobo-Engage-Lite-Public
-
-Build instructions: `npm install && npm run build`
 
 == Installation ==
 
@@ -65,6 +59,12 @@ Post in the WordPress.org support forum or visit https://wprobo.com/contact/
 
 == Changelog ==
 
+= 1.0.1 =
+* Compliance: Renamed internal function/constant prefix from `wpr_` to `wpre_` to satisfy WordPress.org's 4-character prefix requirement.
+* Fix: Schedule tab no longer wraps to a second row at narrow admin widths.
+* Fix: PRO badges in the admin now render with their intended styling (allow `class` attribute in `wp_kses`).
+* Fix: Upgrade button text now stays white across hover and active states.
+
 = 1.0.0 =
 * Initial release
 * Popup, floating bar, and slide-in campaign types
@@ -76,6 +76,9 @@ Post in the WordPress.org support forum or visit https://wprobo.com/contact/
 * Campaign import/export
 
 == Upgrade Notice ==
+
+= 1.0.1 =
+Recommended update. Fixes WordPress.org prefix compliance and minor admin UI issues.
 
 = 1.0.0 =
 Initial release.

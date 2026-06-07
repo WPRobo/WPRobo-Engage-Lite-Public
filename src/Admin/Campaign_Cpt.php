@@ -8,7 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class Campaign_Cpt
  *
- * Handles the registration of the 'wpr_campaign' Custom Post Type.
+ * Handles the registration of the 'wpre_campaign' Custom Post Type.
  *
  * @package WPRobo_Engage_Lite\Admin
  */
@@ -73,6 +73,6 @@ class Campaign_Cpt {
 			'show_in_rest'        => true,
 		);
 
-		register_post_type( 'wpr_campaign', $args );
+		register_post_type( 'wpre_campaign', $args );
 	}
 }

@@ -42,7 +42,6 @@ class Services {
 		add_action( 'admin_init', array( $tools, 'handle_export_action' ) );
 		add_action( 'admin_init', array( $tools, 'handle_import_action' ) );
 		add_filter( 'upload_mimes', array( $tools, 'allow_json_uploads' ) );
-
 	}
 
 	private function register_public_services(): void {

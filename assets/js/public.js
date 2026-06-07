@@ -8,7 +8,7 @@
 		// Find the first non-email field value for name variables
 		var nameValue = '';
 		for (var key in formData) {
-			if (key !== 'email' && formData[key] && key.indexOf('wpr_field_') === 0) {
+			if (key !== 'email' && formData[key] && key.indexOf('wpre_field_') === 0) {
 				nameValue = formData[key];
 				break;
 			}

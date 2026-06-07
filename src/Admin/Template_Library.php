@@ -150,7 +150,7 @@ class Template_Library {
 		$post_id = wp_insert_post(
 			array(
 				'post_title'  => $campaign_title,
-				'post_type'   => 'wpr_campaign',
+				'post_type'   => 'wpre_campaign',
 				'post_status' => 'draft',
 			)
 		);
@@ -163,7 +163,7 @@ class Template_Library {
 		$settings = $template_data['settings'];
 
 		foreach ( $settings as $key => $value ) {
-			$meta_key = '_wpr_engage_' . $key;
+			$meta_key = '_wpre_engage_' . $key;
 			update_post_meta( $post_id, $meta_key, sanitize_text_field( $value ) );
 		}
 
@@ -180,7 +180,7 @@ class Template_Library {
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only filter parameter, no state change.
 		$category = isset( $_GET['category'] ) ? sanitize_text_field( wp_unslash( $_GET['category'] ) ) : '';
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only search parameter, no state change.
-		$search   = isset( $_GET['search'] ) ? sanitize_text_field( wp_unslash( $_GET['search'] ) ) : '';
+		$search = isset( $_GET['search'] ) ? sanitize_text_field( wp_unslash( $_GET['search'] ) ) : '';
 
 		$templates               = $this->get_templates( $category, $search );
 		$categories              = $this->get_categories();
@@ -521,7 +521,7 @@ class Template_Library {
 			$post_id = wp_insert_post(
 				array(
 					'post_title'  => __( 'New Campaign', 'wprobo-engage-lite' ),
-					'post_type'   => 'wpr_campaign',
+					'post_type'   => 'wpre_campaign',
 					'post_status' => 'draft',
 				)
 			);
@@ -531,8 +531,8 @@ class Template_Library {
 			}
 
 			// Set default campaign type
-			update_post_meta( $post_id, '_wpr_engage_campaign_type', 'popup' );
-			update_post_meta( $post_id, '_wpr_engage_campaign_status', 'draft' );
+			update_post_meta( $post_id, '_wpre_engage_campaign_type', 'popup' );
+			update_post_meta( $post_id, '_wpre_engage_campaign_status', 'draft' );
 		} else {
 			// Create from template
 			$post_id = $this->create_campaign_from_template( $template_id );
