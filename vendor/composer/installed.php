@@ -3,7 +3,7 @@
         'name' => 'wprobo/wprobo-engage-lite',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => 'b5acadbe0f8b4b9a416003002047828254e235dd',
+        'reference' => '2e4e990d8a28baa9ea4e28e1744a7494f429266d',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'wprobo/wprobo-engage-lite' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'b5acadbe0f8b4b9a416003002047828254e235dd',
+            'reference' => '2e4e990d8a28baa9ea4e28e1744a7494f429266d',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

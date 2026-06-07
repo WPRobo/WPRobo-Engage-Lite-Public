@@ -3,7 +3,7 @@
  * Plugin Name:       WPRobo Engage Lite
  * Plugin URI:        https://wprobo.com/plugins/wprobo-engage
  * Description:       Grow your email list with beautiful popups, floating bars, and slide-ins. Create unlimited campaigns with time delay, scroll depth, and exit-intent triggers.
- * Version:           1.0.1
+ * Version:           1.0.2
  * Author:            wprobo
  * Author URI:        https://wprobo.com
  * License:           GPLv2 or later
@@ -58,7 +58,7 @@ if ( in_array( 'wprobo-engage-pro/wprobo-engage.php', $wprobo_engage_lite_active
 /**
  * Define constants.
  */
-define( 'WPROBO_ENGAGE_LITE_VERSION', '1.0.1' );
+define( 'WPROBO_ENGAGE_LITE_VERSION', '1.0.2' );
 define( 'WPROBO_ENGAGE_LITE_PATH', plugin_dir_path( __FILE__ ) );
 define( 'WPROBO_ENGAGE_LITE_URL', plugin_dir_url( __FILE__ ) );
 define( 'WPROBO_ENGAGE_LITE_UPGRADE_URL', 'https://wprobo.com/plugins/wprobo-engage/?utm_source=lite&utm_medium=plugin&utm_campaign=upgrade' );

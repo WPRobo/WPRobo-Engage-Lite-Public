@@ -5,7 +5,7 @@ Tags: popup, lead generation, email opt-in, floating bar, campaign
 Requires at least: 5.8
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -59,6 +59,10 @@ Post in the WordPress.org support forum or visit https://wprobo.com/contact/
 
 == Changelog ==
 
+= 1.0.2 =
+* Added: WordPress.org listing assets — plugin icon, banner, and screenshots.
+* Internal: release pipeline is now fully automated (no end-user impact).
+
 = 1.0.1 =
 * Compliance: Renamed internal function/constant prefix from `wpr_` to `wpre_` to satisfy WordPress.org's 4-character prefix requirement.
 * Fix: Schedule tab no longer wraps to a second row at narrow admin widths.
@@ -76,6 +80,9 @@ Post in the WordPress.org support forum or visit https://wprobo.com/contact/
 * Campaign import/export
 
 == Upgrade Notice ==
+
+= 1.0.2 =
+Adds the official plugin icon, banner, and screenshots to the WordPress.org listing.
 
 = 1.0.1 =
 Recommended update. Fixes WordPress.org prefix compliance and minor admin UI issues.
